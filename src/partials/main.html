@@ -1,24 +1,27 @@
 <section class="MainPage">
-  <div class="Container GalleryContainer"></div>
+  <div class="container MainPage__container">
+    <ul class="MainPage__Grid"></ul>
+  </div>
 </section>
 
 <template class="GalleryTemplate">
-  <figure class="MainPage__PhotoContainer">
-    <img
-      class="MainPage__Img"
-      src="https://picsum.photos/seed/picsum/200/300"
-      alt=""
-    />
-    <figcaption class="MainPage__TextBox">
-      <p class="MainPage_PhotoTitle">Title</p>
-      <div>
-        <p class="MaiPage__PhotoDescription Main__PhotoDescription--Type"></p>
-          Type
-        </p>
-        <p class="MainPage__PhotoDescription MainPage__PhotoDescription--"
-          >Year</span
-        >
+  <li class="MainPage__Item">
+    <figure class="MainPage__PhotoContainer">
+      <div class="ImgWrapper skeleton">
+        <img class="MainPage__Img" src="" alt="" />
       </div>
-    </figcaption>
-  </figure>
+      <figcaption class="MainPage__TextBox">
+        <p class="MainPage__PhotoTitle skeleton__text">Title</p>
+        <div class="MainPage__PhotoDescription">
+            <p class="skeleton__text"></p>
+          <p class="MainPage__PhotoType">
+            <p class="skeleton__text"></p>
+          </p>
+          <p class="MainPage__PhotoYear ">
+            <p class="skeleton__text"></p>
+          </p>
+        </div>
+      </figcaption>
+    </figure>
+  </li>
 </template>
