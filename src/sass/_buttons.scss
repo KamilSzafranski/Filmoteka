@@ -1,0 +1,14 @@
+.top-button {
+  position: fixed;
+  right: 50px;
+  bottom: 100px;
+  display: inline-block;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  }
+
+.top-button:hover {
+  scale: 1.1;
+}
