@@ -1,4 +1,4 @@
-@import '~node_modules/modern-normalize/modern-normalize.css';
+@import "~node_modules/modern-normalize/modern-normalize.css";
 * {
   box-sizing: border-box;
   list-style: none;
@@ -18,8 +18,7 @@ a {
   padding-right: 20px;
 }
 
-@media only screen and (min-width: 768px) and (max-width: 1199px) {
-  
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
   .container {
     max-width: 768px;
     padding-left: 76px;
@@ -27,9 +26,8 @@ a {
   }
 }
 
-@media only screen and (min-width: 1200px){
-  
+@media only screen and (min-width: 1024px) {
   .container {
-    max-width: 1200px;
+    max-width: 1024px;
   }
 }
