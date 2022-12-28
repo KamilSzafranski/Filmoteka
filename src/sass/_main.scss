@@ -31,7 +31,6 @@
   }
   &__PhotoContainer {
     margin-bottom: 20px;
-    background-color: white;
   }
   &__Img {
     display: block;
@@ -40,7 +39,7 @@
     object-fit: cover;
   }
   &__TextBox {
-    font-family: "Roboto";
+    font-family: $main-font;
     font-style: normal;
     font-weight: 500;
     font-size: 12px;
@@ -55,7 +54,7 @@
     justify-content: flex-start;
     align-items: center;
     gap: 10px;
-    color: #ff6b08;
+    color: $accent-color;
   }
   &__PhotoType {
     position: relative;
@@ -70,4 +69,44 @@
 .ImgWrapper {
   margin-bottom: 10px;
   max-width: 480px;
+}
+@media screen and (min-width: 500px) and (max-width: 767px) {
+  .skeleton {
+    width: 439px;
+    height: 624px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .skeleton {
+    width: 293px;
+    height: 398px;
+  }
+
+  .MainPage {
+    &__Grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+    &__Item {
+      flex-basis: calc((100% - 30px) / 2);
+    }
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .skeleton {
+    max-width: 274px;
+    height: 398px;
+  }
+  .container {
+    padding-left: 71px;
+    padding-right: 71px;
+  }
+  .MainPage {
+    &__Item {
+      flex-basis: calc((100% - 60px) / 3);
+    }
+  }
 }
