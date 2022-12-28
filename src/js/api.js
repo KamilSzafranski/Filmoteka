@@ -18,3 +18,5 @@ export async function getMovies(page = 1) {
       })
       .catch(error => console.log(error));
   }
+
+console.log(getMovies());
