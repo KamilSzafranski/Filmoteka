@@ -1,7 +1,7 @@
 const btnTop = document.querySelector(".top-button");
 
 export function scrollFunction() {
-  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+  if (document.body.scrollTop > 230 || document.documentElement.scrollTop > 230) {
     btnTop.style.display = "block";
   } else {
     btnTop.style.display = "none";
