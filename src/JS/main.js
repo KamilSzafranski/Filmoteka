@@ -25,17 +25,17 @@ https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`
     );
     const responseCategory = await getMovieCategory.json();
     const dataCategory = responseCategory.genres;
-    console.log(dataCategory);
-    console.log(dataMovie);
 
     [...galleryGrid.children].forEach((element, index) => {
+      const markup = `<img class="MainPage__Img skeleton" alt="Poster of movie:${
+        dataMovie[index].title || dataMovie[index].name
+      }"  src="https://image.tmdb.org/t/p/w500${
+        dataMovie[index].poster_path
+      }" data-id="${dataMovie[index].id}"/>`;
+
       const listDescendant = element.querySelectorAll("*");
+
       [...listDescendant].forEach(listElement => {
-        const markup = `<img class="MainPage__Img skeleton" alt="Poster of movie:${
-          dataMovie[index].title || dataMovie[index].name
-        }"  src="https://image.tmdb.org/t/p/w500${
-          dataMovie[index].poster_path
-        }" data-id="${dataMovie[index].id}"/>`;
         if (listElement.classList.contains("MainPage__Img")) {
           listElement.remove();
         }
@@ -56,8 +56,12 @@ https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`
           listElement.after("|");
 
           const movieCategory = dataMovie[index].genre_ids
-            .flatMap(e => {
-              return dataCategory.flatMap(el => (e === el.id ? el.name : []));
+            .flatMap(dataMovieTypeID => {
+              return dataCategory.flatMap(categoryElement =>
+                dataMovieTypeID === categoryElement.id
+                  ? categoryElement.name
+                  : []
+              );
             })
             .join(", ");
           listElement.textContent = `${
