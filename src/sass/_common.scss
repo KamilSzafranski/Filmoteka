@@ -10,7 +10,15 @@ body {
   margin: auto;
   position: relative;
   max-width: 100%;
+  background-color: white;
+  transition: all 0.3s ease-in-out;
+ /*  transition: background-color 200ms ease-out; */
 }
+
+/* .dark-mode {
+  background-color: #202020;
+} */
+
 a {
   text-decoration: none;
   cursor: pointer;
@@ -35,4 +43,35 @@ a {
     padding-left: 71px;
     padding-right: 71px;
   }
+}
+
+//darkmode
+
+body.dark {
+  background-color: #18191a;
+}
+.darkmode-toggle {
+  position: relative;
+  height: 55px;
+  width: 110px;
+  border-radius: 100px;
+  background-color: #fff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+.darkmode-toggle::before {
+  content: "";
+  position: absolute;
+  height: 40px;
+  width: 40px;
+  background: #FFD700;
+  border-radius: 50%;
+  top: 50%;
+  left: 60px;
+  transform: translateY(-50%);
+  transition: all 0.3s ease-in-out;
+}
+.darkmode-toggle.active::before {
+  background-color: #18191a;
+  left: calc(100% - 40px - 60px);
 }
