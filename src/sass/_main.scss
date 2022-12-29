@@ -16,12 +16,10 @@
   0% {
     background-color: hsl(200, 20%, 70%);
   }
-
   100% {
     background-color: hsl(200, 20%, 95%);
   }
 }
-
 .MainPage {
   padding: 20px 0px 40px 0px;
   display: flex;
@@ -76,13 +74,11 @@
     height: 624px;
   }
 }
-
 @media screen and (min-width: 768px) {
   .skeleton {
     width: 293px;
     height: 398px;
   }
-
   .MainPage {
     &__Grid {
       display: flex;
@@ -94,7 +90,6 @@
     }
   }
 }
-
 @media screen and (min-width: 1024px) {
   .skeleton {
     max-width: 274px;
