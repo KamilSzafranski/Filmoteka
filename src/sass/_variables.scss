@@ -1,16 +1,16 @@
-$main-font: 'Roboto', sans-serif;
+$main-font: "Roboto", sans-serif;
 
 $primary-text-color: #000000; //on light background
 $secondary-text-color: #ffffff; //on dark background
 $footer-text-color: #545454;
-$movie-description-color-text: #8C8C8C; // Vote, Popularity, Original Title, Genre
-$alert-text-color: #FF001B;
+$movie-description-color-text: #8c8c8c; // Vote, Popularity, Original Title, Genre
+$alert-text-color: #ff001b;
 
-$accent-color: #FF6B08; //orange
+$accent-color: #ff6b08; //orange
 
-$primary-background-color: #E5E5E5;
-$secondary-background-color: #F7F7F7; //for footer and arrow buttons 
+$primary-background-color: #e5e5e5;
+$secondary-background-color: #f7f7f7; //for footer and arrow buttons
 
 $my-library-button-shadow: rgba(255, 107, 1, 0.6);
 
-
+$animation-function: cubic-bezier(0.4, 0, 0.2, 1);
