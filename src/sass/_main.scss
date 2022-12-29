@@ -56,10 +56,9 @@
   }
   &__PhotoType {
     position: relative;
-    &--after::after {
-      visibility: hidden;
+    flex-shrink: 0;
+    &::after {
       position: absolute;
-      content: "|";
       right: -5.5px;
     }
   }
