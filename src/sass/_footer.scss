@@ -7,8 +7,9 @@
     background-color: #F7F7F7;
     padding-top: 30px;
     padding-bottom: 28px;
+
+    &-underline {
+        text-decoration: underline;
+    }
 }   
 
-.footer-underline {
-    text-decoration: underline;
-}
