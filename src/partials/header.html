@@ -2,7 +2,7 @@
   <div class="header-container">
     <nav class="nav-box">
       <a href="./index.html" class="nav-box__link">
-        <svg width="25" height="25" alt="film-logo">
+        <svg width="24" height="24">
           <use href="./images/symbol-defs.svg#film"></use>
         </svg>
         <span class="logo-text">Filmoteka</span>
@@ -22,6 +22,22 @@
       </ul>
     </nav>
 
-    <div class="js-box"></div>
+    <div class="js-box">
+      <form class="search-form" id="search-form">
+        <label class="header__label">
+          <input
+            class="header__input"
+            type="text"
+            name="movieSearch"
+            placeholder="Search movie..."
+          />
+          <button type="submit" class="header__submit">
+            <svg width="12" height="12">
+              <use href="./images/symbol-defs.svg#search-2"></use>
+            </svg>
+          </button>
+        </label>
+      </form>
+    </div>
   </div>
 </header>
