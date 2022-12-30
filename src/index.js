@@ -1,7 +1,7 @@
 import { scrollFunction } from "./JS/topBtn";
 import "./JS/darkmode";
 import "./JS/library";
-import { getPopularMovie } from "./JS/main";
+import { getPopularMovie, getSearchMovie } from "./JS/main";
 import { renderLoader } from "./JS/loader";
 
 getPopularMovie();
@@ -11,5 +11,3 @@ window.onscroll = function () {
 };
 
 import "./JS/cookies";
-
-
