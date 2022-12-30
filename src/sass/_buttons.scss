@@ -1,12 +1,13 @@
 .top-button {
+  display: none;
   position: fixed;
-  right: 50px;
-  bottom: 100px;
+  right: 20px;
+  bottom: 80px;
   border: none;
   background-color: transparent;
   cursor: pointer;
   transition: all 0.3s ease;
-  z-index: 99;
+  z-index: 3;
   }
 
 .top-button:hover {
