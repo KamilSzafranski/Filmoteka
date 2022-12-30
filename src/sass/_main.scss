@@ -35,6 +35,13 @@
     width: 100%;
     border-radius: 5px;
     object-fit: cover;
+    transition-duration: 500ms;
+
+    &:hover {
+      cursor: pointer;
+      box-shadow: -3px 8px 24px -6px rgba(66, 68, 90, 1);
+      transform: scale(1.05); 
+    }
   }
   &__TextBox {
     font-family: $main-font;
@@ -63,6 +70,8 @@
     }
   }
 }
+
+
 .ImgWrapper {
   margin-bottom: 10px;
   max-width: 480px;
