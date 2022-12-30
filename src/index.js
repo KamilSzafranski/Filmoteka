@@ -9,3 +9,5 @@ getPopularMovie();
 window.onscroll = function () {
   scrollFunction();
 };
+
+import "./JS/cookies";
