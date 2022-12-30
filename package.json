@@ -4,8 +4,8 @@
   "description": "",
   "homepage": "https://kamilszafranski.github.io/piatkowyDeploy",
   "scripts": {
-    "dev": "parcel src/*.html",
-    "build": "parcel build src/*.html --public-url /parcel-project-template/"
+    "start": "parcel src/*.html",
+    "build": "parcel build src/*.html --public-url /piatkowyDeploy"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "axios": "^1.2.2",
+    "bootstrap-icons": "^1.10.3",
     "modern-normalize": "^1.1.0"
   },
   "devDependencies": {
