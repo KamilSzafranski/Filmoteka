@@ -51,13 +51,17 @@ body.dark {
   background-color: #18191a;
 }
 .darkmode-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
   position: relative;
   height: 30px;
   width: 70px;
   border-radius: 100px;
-  background-color: #fff;
+  background-color: #F7F7F7;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   cursor: pointer;
+  z-index: 1;
 }
 .darkmode-toggle::before {
   content: "";
@@ -69,9 +73,14 @@ body.dark {
   top: 50%;
   left: 42px;
   transform: translateY(-50%);
+  z-index: 1;
   transition: all 0.3s ease-in-out;
 }
 .darkmode-toggle.active::before {
   background-color: #18191a;
   left: calc(100% - 40px - 22px);
+}
+
+.darkmode-icon  {
+  color: #f1c40f;
 }
