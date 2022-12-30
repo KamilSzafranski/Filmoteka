@@ -5,7 +5,7 @@
   "homepage": "https://kamilszafranski.github.io/piatkowyDeploy",
   "scripts": {
     "start": "parcel src/*.html",
-    "build": "parcel build src/*.html --public-url /piatkowyDeploy"
+    "build": "parcel build src/*.html --public-url ./"
   },
   "repository": {
     "type": "git",
