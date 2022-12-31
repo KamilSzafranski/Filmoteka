@@ -6,22 +6,38 @@ const galleryGrid = document.querySelector("ul.MainPage__Grid");
 const SEARCH_INPUT = document.querySelector("input.header__input");
 const SEARCH_BTN = document.querySelector("button.header__submit");
 const NO_POSTER = "https://picsum.photos/id/870/200/300?grayscale&blur=2";
+const PAGINATION_CONTAINER = document.querySelector("div.Pagination");
+const PAGINATION_GRID = document.querySelector("ul.Pagination__grid");
 
 let searchMovieOption = {
   api_key: API_KEY,
   language: "en-US",
-  page: 1,
 };
 
 let totalPages;
 let totalResults;
-let currentPage;
+let currentPage = 1;
+let results;
 
 const createTemplateGallery = number => {
   for (let i = 0; i < number; i++) {
     GALLERY.append(GALLERY_TEMPLATE.content.cloneNode(true));
   }
 };
+
+const createPaginationList = numberOfPage => {
+  PAGINATION_CONTAINER.style.display = "flex";
+  const paginationGridFragment = document.createDocumentFragment();
+  for (let k = 0; k < numberOfPage; k++) {
+    const paginationGridItem = document.createElement("li");
+    paginationGridItem.classList.add("Pagination__item");
+    paginationGridItem.textContent = k + 1;
+    paginationGridFragment.append(paginationGridItem);
+  }
+
+  PAGINATION_GRID.append(paginationGridFragment);
+};
+
 const displayMovie = (Movie, Category) => {
   [...galleryGrid.children].forEach((element, index) => {
     let {
@@ -108,8 +124,7 @@ const getPopularMovie = async () => {
     const dataPopularMovie = responsePopularMovie.results;
 
     const getPopularMovieCategory = await fetch(
-      `
-https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`
+      `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`
     );
     const responsePopularCategory = await getPopularMovieCategory.json();
     const dataPopularCategory = responsePopularCategory.genres;
@@ -122,12 +137,13 @@ https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`
 
 const getSearchMovie = async event => {
   try {
-    GALLERY.innerHTML = "";
     event.preventDefault();
+    GALLERY.innerHTML = "";
     searchMovieOption.query = SEARCH_INPUT.value.trim();
+    searchMovieOption.page = currentPage;
     event.currentTarget.blur();
     const params = new URLSearchParams(searchMovieOption);
-    if (SEARCH_INPUT.value.trim() === "") {
+    if (searchMovieOption.query === "") {
       return console.log("BRAK DANYCH W INPUCIE");
     }
 
@@ -140,11 +156,12 @@ const getSearchMovie = async event => {
 
     totalPages = responseSearchMovie.total_pages;
     totalResults = responseSearchMovie.total_results;
+    results = responseSearchMovie.results.length;
 
-    if (totalResults < 20) {
+    if (results < 20) {
       const removeRemainingSkeleton = [...GALLERY.children].forEach(
         (remainingElement, remainingIndex) => {
-          if (remainingIndex >= totalResults) remainingElement.remove();
+          if (remainingIndex >= results) remainingElement.remove();
         }
       );
     }
@@ -158,10 +175,36 @@ https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`
     const dataSearchCategory = responseSearchCategory.genres;
 
     displayMovie(dataSearchMovie, dataSearchCategory);
-    SEARCH_INPUT.value = "";
+    createPaginationList(totalPages);
   } catch (error) {
     console.error(error.message, error.code);
   }
 };
 
-export { getPopularMovie, getSearchMovie, SEARCH_BTN };
+const pagination = event => {
+  const {
+    dataset: { page },
+  } = event.target;
+  event.preventDefault();
+
+  if (currentPage >= totalPages) {
+    console.log("NIE MA WIĘCEJ STRON");
+  }
+
+  if (page === "next") {
+    currentPage++;
+    getSearchMovie(event);
+  }
+  if (page == "previous") {
+    currentPage--;
+    getSearchMovie(event);
+  }
+};
+
+export {
+  getPopularMovie,
+  getSearchMovie,
+  pagination,
+  SEARCH_BTN,
+  PAGINATION_LIST,
+};

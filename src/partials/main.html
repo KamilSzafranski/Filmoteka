@@ -1,6 +1,24 @@
 <section class="MainPage">
   <div class="container MainPage__container">
     <ul class="MainPage__Grid"></ul>
+    <div class="Pagination">
+      <div class="Pagination__arrow" data-page="previous">
+        <svg
+          class="Pagination__icon Pagination__icon--right"
+          data-page="previous"
+        >
+          <use href="./images/sprite.svg#arrow" data-page="previous"></use>
+        </svg>
+      </div>
+      <div class="Pagination__containerGrid">
+        <ul class="Pagination__grid"></ul>
+      </div>
+      <div class="Pagination__arrow" data-page="next">
+        <svg class="Pagination__icon Pagination__icon--left" data-page="next">
+          <use href="./images/sprite.svg#arrow" data-page="next"></use>
+        </svg>
+      </div>
+    </div>
   </div>
 </section>
 
