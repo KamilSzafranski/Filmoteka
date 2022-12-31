@@ -4,14 +4,18 @@ const NUMBEF_OF_PHOTO = 20;
 const API_KEY = "40ed737db1bcf2c75f234fa073fa8cf6";
 const galleryGrid = document.querySelector("ul.MainPage__Grid");
 const SEARCH_INPUT = document.querySelector("input.header__input");
+const SEARCH_BTN = document.querySelector("button.header__submit");
 const NO_POSTER = "https://picsum.photos/id/870/200/300?grayscale&blur=2";
 
-const searchMovieOption = {
-  language: "en-US",
-  query: [SEARCH_INPUT.value],
+let searchMovieOption = {
   api_key: API_KEY,
+  language: "en-US",
   page: 1,
 };
+
+let totalPages;
+let totalResults;
+let currentPage;
 
 const createTemplateGallery = number => {
   for (let i = 0; i < number; i++) {
@@ -23,7 +27,7 @@ const displayMovie = (Movie, Category) => {
     let {
       title,
       name,
-      poster_path: poster,
+      poster_path,
       id,
       genre_ids: genreID,
       release_date: releaseDate,
@@ -31,11 +35,10 @@ const displayMovie = (Movie, Category) => {
     } = Movie[index];
     let movieCategory;
 
-    poster = `https://image.tmdb.org/t/p/w500${poster}`;
-
-    if (poster === "https://image.tmdb.org/t/p/w500null") {
-      poster = "https://picsum.photos/id/237/200/300";
-    }
+    let poster =
+      poster_path === null
+        ? "https://i.ibb.co/R9jK8kt/nocover.jpg"
+        : `https://image.tmdb.org/t/p/w500${poster_path}`;
 
     const markup = `<img class="MainPage__Img skeleton" alt="Poster of movie:${
       title || name
@@ -72,14 +75,21 @@ const displayMovie = (Movie, Category) => {
         }
 
         listElement.textContent = `${
-          movieCategory === "" ? "No type yet" : movieCategory
+          movieCategory === "" ? "No type in database" : movieCategory
         }`;
       }
 
       if (listElement.classList.contains("MainPage__PhotoYear")) {
         listElement.classList.remove("skeleton__text");
 
-        listElement.textContent = (releaseDate || firstAirDate).substring(0, 4);
+        let dateToWrite =
+          (releaseDate || firstAirDate) ?? "No data in database";
+
+        if (dateToWrite === "No data in database") {
+          return (listElement.textContent = dateToWrite);
+        }
+
+        listElement.textContent = dateToWrite.slice(0, 4);
       }
     });
   });
@@ -107,18 +117,32 @@ https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`
   }
 };
 
-const getSearchMovie = async () => {
+const getSearchMovie = async event => {
   try {
+    GALLERY.innerHTML = "";
+    event.preventDefault();
+    searchMovieOption.query = SEARCH_INPUT.value.trim();
+    event.currentTarget.blur();
+    const params = new URLSearchParams(searchMovieOption);
+    if (SEARCH_INPUT.value.trim() === "") {
+      return console.log("BRAK DANYCH W INPUCIE");
+    }
+
     createTemplateGallery(NUMBEF_OF_PHOTO);
+
     const getSearchMovie = await fetch(
-      `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&page=1&query=Witcher`
+      `https://api.themoviedb.org/3/search/movie?${params}`
     );
     const responseSearchMovie = await getSearchMovie.json();
 
-    // [...GALLERY.children].forEach((e, i) => {
-    //   if (i >= ) e.remove();
-    // });
+    totalPages = responseSearchMovie.total_pages;
+    totalResults = responseSearchMovie.total_results;
 
+    if (totalResults < 20) {
+      [...GALLERY.children].forEach((remainingElement, remainingIndex) => {
+        if (remainingIndex >= totalResults) remainingElement.remove();
+      });
+    }
     const dataSearchMovie = responseSearchMovie.results;
 
     const getSearchMovieCategory = await fetch(
@@ -129,9 +153,10 @@ https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`
     const dataSearchCategory = responseSearchCategory.genres;
 
     displayMovie(dataSearchMovie, dataSearchCategory);
+    SEARCH_INPUT.value = "";
   } catch (error) {
-    console.error(error.message);
+    console.error(error.message, error.code);
   }
 };
 
-export { getPopularMovie, getSearchMovie };
+export { getPopularMovie, getSearchMovie, SEARCH_BTN };
