@@ -1,15 +1,30 @@
 .footer {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     color: #545454;
-    line-height: 19px;
+    line-height: 16,41px;
     background-color: #F7F7F7;
     padding-top: 30px;
     padding-bottom: 28px;
 
-    &-underline {
-        text-decoration: underline;
-    }
-}   
+    &__dev {
 
+        padding-top: 10px;
+        
+        &-team{
+            text-decoration: underline;
+        }
+    }   
+}
+
+@media only screen and (min-width: 768px) {
+    .footer {
+        flex-direction: row;
+
+        &__dev {
+            padding-top: 0;
+        }   
+    }
+}

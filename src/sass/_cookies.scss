@@ -1,23 +1,4 @@
-
-.cookie-body {
-    font-family: 'Roboto', sans-serif;
-    background-color: white;
-}
-
-.cookie-container {
-    width: 1600px;
-    margin: auto;
-}
- .cookie-subcontainer {
-    width: 85%;
-    margin: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-} 
-
-#cookies {
+.cookies {
     width: 100%;
     position: fixed;
     bottom: 0;
@@ -25,45 +6,59 @@
     background-color: rgba(0,0,0,0.7);
     z-index: 1;
     font-size: 18px;
-    /* display: none; */
-}
 
-#cookies-btn {
-    border-radius: 5px;
-    padding: 8px 12px;
-    border: 1px solid #FF6B08;
-    background-color: #FF6B08;
-    color: white;
-    transition: linear 0.3s;
-    font-size: 18px;
-    margin-bottom: 20px;
-}
+    &__container {
+        width: 1600px;
+        margin: auto;
+    }
 
-#cookies-btn:hover {
-    background-color: #545454;
-    border: 1px solid #FF6B08;
-    cursor: pointer;
-}
+    &__subcontainer {
+        width: 85%;
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    } 
 
+    &__text {
+        min-height: 70px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 15px 0;;
+    }
 
+    &__btn {
+        border-radius: 5px;
+        padding: 8px 12px;
+        border: 1px solid #FF6B08;
+        background-color: #FF6B08;
+        color: white;
+        transition: linear 0.3s;
+        font-size: 18px;
+        margin-bottom: 20px;
 
-.cookies {
-    min-height: 70px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 10px;
-}
+        &:hover {
+            background-color: #545454;
+            border: 1px solid #FF6B08;
+            cursor: pointer;
+        }
+        
+    }
 
-.cookies a {
-    color: #FF6B08;
-    font-weight: 500;
-    text-decoration: none;
+    & a {
+        color: #FF6B08;
+        font-weight: 500;
+        text-decoration: none;
+    }
+    
 }
 
 @media (max-width: 1600px) {
-    .cookie-container {
+    .cookies__container {
         width: 100%;}
 }
 
