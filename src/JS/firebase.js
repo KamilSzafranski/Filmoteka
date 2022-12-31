@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getPopularMovie } from "./main";
+// import { getPopularMovie } from "./main";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
 const googleAuthBtn = document.querySelector("#google");
@@ -7,8 +7,8 @@ const googleAuthDiv = document.querySelector("#google-box-id");
 export const KEY = "UserData";
 
 googleAuthBtn.addEventListener("click", onGoogleAuthBtnClick);
-checkLocalStorageUserData();
-//авторизация
+checkUserData();
+
 const provider = new GoogleAuthProvider();
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -43,12 +43,12 @@ function onGoogleAuthBtnClick() {
           displayName: user.displayName,
           photoURL: user.photoURL,
         };
-        setLocalStorageUser(KEY, userAuthData);
+        setUser(KEY, userAuthData);
         googleAuthBtn.classList.add("button-hidden");
         googleAuthDiv.classList.add("google-box");
         markupUserAuth(user);
         const logoutBtn = document.querySelector(".google-btn--logout");
-        logoutBtn.addEventListener("click", onLogoutClick);
+        logoutBtn.addEventListener("click", logoutClick);
       }
     })
     .catch(error => {
@@ -63,11 +63,7 @@ function onGoogleAuthBtnClick() {
     });
 }
 
-function markupUserAuth({
-  displayName = "Anonymous",
-  email,
-  photoURL = "https://i7.photo.2gis.com/images/profile/844424962167907_91d6_320x.jpg",
-}) {
+function markupUserAuth({ displayName, email, photoURL }) {
   googleAuthDiv.insertAdjacentHTML(
     "beforeend",
     `<div class="js-box-out">
@@ -83,30 +79,30 @@ function markupUserAuth({
   );
 }
 
-export function setLocalStorageUser(KEY, data) {
+export function setUser(KEY, data) {
   localStorage.setItem(KEY, JSON.stringify(data));
 }
 
-export function getLocalStorageUser(KEY) {
+export function getUser(KEY) {
   return JSON.parse(localStorage.getItem(KEY));
 }
 
-function onLogoutClick() {
+function logoutClick() {
   localStorage.removeItem(KEY);
   googleAuthDiv.classList.remove("google-box");
   document.querySelector(".js-box-out").remove();
   googleAuthBtn.classList.remove("button-hidden");
-  getPopularMovie();
+  //   getPopularMovie();
 }
 
-function checkLocalStorageUserData() {
-  const dataUser = getLocalStorageUser(KEY);
+function checkUserData() {
+  const dataUser = getUser(KEY);
 
   if (dataUser) {
     googleAuthBtn.classList.add("button-hidden");
     googleAuthDiv.classList.add("google-box");
     markupUserAuth(dataUser);
     const logoutBtn = document.querySelector(".google-btn--logout");
-    logoutBtn.addEventListener("click", onLogoutClick);
+    logoutBtn.addEventListener("click", logoutClick);
   }
 }
