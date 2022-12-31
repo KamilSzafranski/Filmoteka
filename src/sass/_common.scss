@@ -12,12 +12,8 @@ body {
   max-width: 100%;
   background-color: white;
   transition: all 0.3s ease-in-out;
-  /*  transition: background-color 200ms ease-out; */
 }
 
-/* .dark-mode {
-  background-color: #202020;
-} */
 
 a {
   text-decoration: none;
@@ -88,6 +84,5 @@ body.dark {
 }
 
 .darkmode-icon {
-  /* color: #f1c40f; */
   color: #ff6b08;
 }
