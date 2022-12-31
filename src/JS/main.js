@@ -44,54 +44,57 @@ const displayMovie = (Movie, Category) => {
       title || name
     }"  src="${poster}" data-id="${id}"/>`;
 
-    const listDescendant = element.querySelectorAll("*");
-
-    [...listDescendant].forEach(listElement => {
-      if (listElement.classList.contains("MainPage__Img")) {
-        listElement.remove();
-      }
-      if (listElement.classList.contains("ImgWrapper")) {
-        listElement.insertAdjacentHTML("beforeend", markup);
-      }
-      if (listElement.classList.contains("MainPage__PhotoTitle")) {
-        listElement.classList.remove("skeleton__text");
-        listElement.textContent = title || name;
-      }
-
-      if (listElement.classList.contains("MainPage__PhotoType")) {
-        listElement.classList.remove("skeleton__text");
-        listElement.after("|");
-
-        const movieAllCategory = genreID.flatMap(dataMovieGenreID => {
-          return Category.flatMap(categoryElement =>
-            dataMovieGenreID === categoryElement.id ? categoryElement.name : []
-          );
-        });
-
-        if (movieAllCategory.length >= 4) {
-          movieCategory = movieAllCategory.slice(0, 3).join(", ") + " " + "...";
-        } else {
-          movieCategory = movieAllCategory.join(", ");
+    const listDescendant = [...element.querySelectorAll("*")].forEach(
+      listElement => {
+        if (listElement.classList.contains("MainPage__Img")) {
+          listElement.remove();
+        }
+        if (listElement.classList.contains("ImgWrapper")) {
+          listElement.insertAdjacentHTML("beforeend", markup);
+        }
+        if (listElement.classList.contains("MainPage__PhotoTitle")) {
+          listElement.classList.remove("skeleton__text");
+          listElement.textContent = title || name;
         }
 
-        listElement.textContent = `${
-          movieCategory === "" ? "No type in database" : movieCategory
-        }`;
-      }
+        if (listElement.classList.contains("MainPage__PhotoType")) {
+          listElement.classList.remove("skeleton__text");
+          listElement.after("|");
 
-      if (listElement.classList.contains("MainPage__PhotoYear")) {
-        listElement.classList.remove("skeleton__text");
+          const movieAllCategory = genreID.flatMap(dataMovieGenreID => {
+            return Category.flatMap(categoryElement =>
+              dataMovieGenreID === categoryElement.id
+                ? categoryElement.name
+                : []
+            );
+          });
 
-        let dateToWrite =
-          (releaseDate || firstAirDate) ?? "No data in database";
+          if (movieAllCategory.length >= 4) {
+            movieCategory =
+              movieAllCategory.slice(0, 3).join(", ") + " " + "...";
+          } else {
+            movieCategory = movieAllCategory.join(", ");
+          }
 
-        if (dateToWrite === "No data in database") {
-          return (listElement.textContent = dateToWrite);
+          listElement.textContent = `${
+            movieCategory === "" ? "No type in database" : movieCategory
+          }`;
         }
 
-        listElement.textContent = dateToWrite.slice(0, 4);
+        if (listElement.classList.contains("MainPage__PhotoYear")) {
+          listElement.classList.remove("skeleton__text");
+
+          let dateToWrite =
+            (releaseDate || firstAirDate) ?? "No data in database";
+
+          if (dateToWrite === "No data in database") {
+            return (listElement.textContent = dateToWrite);
+          }
+
+          listElement.textContent = dateToWrite.slice(0, 4);
+        }
       }
-    });
+    );
   });
 };
 
@@ -139,9 +142,11 @@ const getSearchMovie = async event => {
     totalResults = responseSearchMovie.total_results;
 
     if (totalResults < 20) {
-      [...GALLERY.children].forEach((remainingElement, remainingIndex) => {
-        if (remainingIndex >= totalResults) remainingElement.remove();
-      });
+      const removeRemainingSkeleton = [...GALLERY.children].forEach(
+        (remainingElement, remainingIndex) => {
+          if (remainingIndex >= totalResults) remainingElement.remove();
+        }
+      );
     }
     const dataSearchMovie = responseSearchMovie.results;
 
