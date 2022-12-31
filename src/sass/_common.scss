@@ -12,7 +12,7 @@ body {
   max-width: 100%;
   background-color: white;
   transition: all 0.3s ease-in-out;
- /*  transition: background-color 200ms ease-out; */
+  /*  transition: background-color 200ms ease-out; */
 }
 
 /* .dark-mode {
@@ -59,7 +59,7 @@ body.dark {
   height: 30px;
   width: 70px;
   border-radius: 100px;
-  background-color: #F7F7F7;
+  background-color: #f7f7f7;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   z-index: 1;
@@ -69,7 +69,8 @@ body.dark {
   position: absolute;
   height: 20px;
   width: 20px;
-  background: #ff6b08;
+
+  background: #ffd700;
   border-radius: 50%;
   top: 50%;
   left: 43px;
@@ -82,7 +83,7 @@ body.dark {
   left: calc(100% - 40px - 22px);
 }
 
-.darkmode-icon  {
+.darkmode-icon {
   /* color: #f1c40f; */
   color: #ff6b08;
 }
