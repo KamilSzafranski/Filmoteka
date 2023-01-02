@@ -1,4 +1,4 @@
-import "./JS/cookies";
+// import "./JS/cookies";
 import { scrollFunction } from "./JS/topBtn";
 import "./JS/darkmode";
 import "./JS/library";
@@ -7,7 +7,7 @@ import {
   getSearchMovie,
   pagination,
   SEARCH_BTN,
-  PAGINATION_LIST,
+  PAGINATION_CONTAINER,
 } from "./JS/main";
 import { renderLoader } from "./JS/loader";
 
@@ -17,3 +17,4 @@ window.onscroll = function () {
 
 getPopularMovie();
 SEARCH_BTN.addEventListener("click", getSearchMovie);
+PAGINATION_CONTAINER.addEventListener("click", pagination);

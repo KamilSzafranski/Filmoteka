@@ -1,3 +1,5 @@
+import image from "../images/nocover.png";
+
 const GALLERY = document.querySelector("ul.MainPage__Grid");
 const GALLERY_TEMPLATE = document.querySelector("template.GalleryTemplate");
 const NUMBEF_OF_PHOTO = 20;
@@ -5,7 +7,6 @@ const API_KEY = "40ed737db1bcf2c75f234fa073fa8cf6";
 const galleryGrid = document.querySelector("ul.MainPage__Grid");
 const SEARCH_INPUT = document.querySelector("input.header__input");
 const SEARCH_BTN = document.querySelector("button.header__submit");
-const NO_POSTER = "https://picsum.photos/id/870/200/300?grayscale&blur=2";
 const PAGINATION_CONTAINER = document.querySelector("div.Pagination");
 const PAGINATION_GRID = document.querySelector("ul.Pagination__grid");
 
@@ -18,6 +19,7 @@ let totalPages;
 let totalResults;
 let currentPage = 1;
 let results;
+let pageLeft;
 
 const createTemplateGallery = number => {
   for (let i = 0; i < number; i++) {
@@ -26,6 +28,7 @@ const createTemplateGallery = number => {
 };
 
 const createPaginationList = numberOfPage => {
+  PAGINATION_GRID.innerHTML = "";
   PAGINATION_CONTAINER.style.display = "flex";
   const paginationGridFragment = document.createDocumentFragment();
   for (let k = 0; k < numberOfPage; k++) {
@@ -36,6 +39,11 @@ const createPaginationList = numberOfPage => {
   }
 
   PAGINATION_GRID.append(paginationGridFragment);
+
+  let pagiantionItemActived = document.querySelector(
+    `.Pagination__item:nth-child(${currentPage})`
+  );
+  pagiantionItemActived.classList.add("Pagination__item--active");
 };
 
 const displayMovie = (Movie, Category) => {
@@ -53,7 +61,7 @@ const displayMovie = (Movie, Category) => {
 
     let poster =
       poster_path === null
-        ? "https://i.ibb.co/R9jK8kt/nocover.jpg"
+        ? image
         : `https://image.tmdb.org/t/p/w500${poster_path}`;
 
     const markup = `<img class="MainPage__Img skeleton" alt="Poster of movie:${
@@ -157,6 +165,9 @@ const getSearchMovie = async event => {
     totalPages = responseSearchMovie.total_pages;
     totalResults = responseSearchMovie.total_results;
     results = responseSearchMovie.results.length;
+    pageLeft = totalPages - currentPage;
+
+    console.log(totalPages);
 
     if (results < 20) {
       const removeRemainingSkeleton = [...GALLERY.children].forEach(
@@ -187,9 +198,8 @@ const pagination = event => {
   } = event.target;
   event.preventDefault();
 
-  if (currentPage >= totalPages) {
-    console.log("NIE MA WIĘCEJ STRON");
-  }
+  let gridTranslateX =
+    PAGINATION_GRID.computedStyleMap().get("transform")[0].x.value;
 
   if (page === "next") {
     currentPage++;
@@ -199,6 +209,47 @@ const pagination = event => {
     currentPage--;
     getSearchMovie(event);
   }
+  if (currentPage >= totalPages || currentPage === 0) {
+    console.log("NIE MA WIĘCEJ STRON");
+  }
+
+  if (page === "next" && currentPage > 3) {
+    gridTranslateX -= 30;
+    move(gridTranslateX);
+  }
+  if (page === "previous" && currentPage >= 3) {
+    gridTranslateX += 30;
+    move(gridTranslateX);
+  }
+
+  if (window.matchMedia("(min-width: 767px)").matches) {
+    if (pageLeft <= 6 && page === "next") {
+      gridTranslateX = -(totalPages - 9) * 30;
+      move(gridTranslateX);
+    }
+    if (pageLeft < 6 && page == "previous") {
+      gridTranslateX = -(totalPages - 9) * 30;
+      move(gridTranslateX);
+    }
+  } else {
+    if (pageLeft <= 2 && page === "next") {
+      gridTranslateX = -(totalPages - 5) * 30;
+      move(gridTranslateX);
+    }
+    if (pageLeft < 2 && page == "previous") {
+      {
+        gridTranslateX = -(totalPages - 5) * 30;
+        move(gridTranslateX);
+      }
+    }
+  }
+
+  PAGINATION_GRID.dataset.page = currentPage;
+
+  // window.scrollTo({
+  //   top: 0,
+  //   behavior: "smooth",
+  // });
 };
 
 export {
@@ -206,5 +257,9 @@ export {
   getSearchMovie,
   pagination,
   SEARCH_BTN,
-  PAGINATION_LIST,
+  PAGINATION_CONTAINER,
+};
+
+const move = value => {
+  PAGINATION_GRID.style.transform = `translateX(${value}px)`;
 };
