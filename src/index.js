@@ -1,13 +1,13 @@
+import "./JS/cookies";
 import { scrollFunction } from "./JS/topBtn";
 import "./JS/darkmode";
 import "./JS/library";
-import { getPopularMovie } from "./JS/main";
+import { getPopularMovie, getSearchMovie, SEARCH_BTN } from "./JS/main";
 import { renderLoader } from "./JS/loader";
-
-getPopularMovie();
 
 window.onscroll = function () {
   scrollFunction();
 };
 
-import "./JS/cookies";
+getPopularMovie();
+SEARCH_BTN.addEventListener("click", getSearchMovie);
