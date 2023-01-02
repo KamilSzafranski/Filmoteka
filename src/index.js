@@ -13,3 +13,4 @@ window.onscroll = function () {
 };
 
 import "./JS/cookies";
+import "./JS/team-modal";
