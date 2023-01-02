@@ -10,8 +10,6 @@ import {
   PAGINATION_CONTAINER,
 } from "./JS/main";
 import { renderLoader } from "./JS/loader";
-import "./JS/cookies";
-import "./JS/team-modal";
 
 window.onscroll = function () {
   scrollFunction();

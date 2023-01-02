@@ -8,6 +8,9 @@ const galleryGrid = document.querySelector("ul.MainPage__Grid");
 const SEARCH_INPUT = document.querySelector("input.header__input");
 const SEARCH_BTN = document.querySelector("button.header__submit");
 const PAGINATION_CONTAINER = document.querySelector("div.Pagination");
+const PAGINATION_CONTAINER_GRID = document.querySelector(
+  "div.Pagination__containerGrid"
+);
 const PAGINATION_GRID = document.querySelector("ul.Pagination__grid");
 
 let searchMovieOption = {
@@ -20,6 +23,8 @@ let totalResults;
 let currentPage = 1;
 let results;
 let pageLeft;
+let firstItem = document.querySelector("div[data-add='first']");
+let lastItem = document.querySelector("div[data-add='last']");
 
 const createTemplateGallery = number => {
   for (let i = 0; i < number; i++) {
@@ -44,8 +49,38 @@ const createPaginationList = numberOfPage => {
     `.Pagination__item:nth-child(${currentPage})`
   );
   pagiantionItemActived.classList.add("Pagination__item--active");
-};
 
+  if (totalPages < 5) {
+    PAGINATION_CONTAINER_GRID.style.width = `${
+      totalPages * 14 + (totalPages - 1) * 16 + 26
+    }px`;
+    move(0);
+  } else {
+    lastItem.textContent = totalPages;
+    lastItem.style.display = "flex";
+    lastItem.previousElementSibling.style.display = "flex";
+  }
+
+  if (pageLeft <= 2) {
+    lastItem.style.display = "none";
+    lastItem.previousElementSibling.style.display = "none";
+  }
+  if (currentPage > 3) {
+    firstItem.style.display = "flex";
+    firstItem.nextElementSibling.style.display = "flex";
+  } else {
+    firstItem.style.display = "none";
+    firstItem.nextElementSibling.style.display = "none";
+  }
+  if (currentPage === 1) {
+    PAGINATION_CONTAINER.firstElementChild.style.display = "none";
+  } else {
+    PAGINATION_CONTAINER.firstElementChild.style.display = "flex";
+  }
+  if (currentPage === totalPages) {
+    PAGINATION_CONTAINER.lastElementChild.style.display = "none";
+  } else PAGINATION_CONTAINER.lastElementChild.style.display = "flex";
+};
 const displayMovie = (Movie, Category) => {
   [...galleryGrid.children].forEach((element, index) => {
     let {
@@ -143,8 +178,11 @@ const getPopularMovie = async () => {
   }
 };
 
-const getSearchMovie = async event => {
+const getSearchMovie = async (event, count = "first") => {
   try {
+    if (count === "first") {
+      currentPage = 1;
+    }
     event.preventDefault();
     GALLERY.innerHTML = "";
     searchMovieOption.query = SEARCH_INPUT.value.trim();
@@ -165,9 +203,6 @@ const getSearchMovie = async event => {
     totalPages = responseSearchMovie.total_pages;
     totalResults = responseSearchMovie.total_results;
     results = responseSearchMovie.results.length;
-    pageLeft = totalPages - currentPage;
-
-    console.log(totalPages);
 
     if (results < 20) {
       const removeRemainingSkeleton = [...GALLERY.children].forEach(
@@ -194,23 +229,24 @@ https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`
 
 const pagination = event => {
   const {
+    nodeName,
+    textContent,
     dataset: { page },
   } = event.target;
   event.preventDefault();
+
+  pageLeft = totalPages - currentPage;
 
   let gridTranslateX =
     PAGINATION_GRID.computedStyleMap().get("transform")[0].x.value;
 
   if (page === "next") {
     currentPage++;
-    getSearchMovie(event);
+    getSearchMovie(event, "second");
   }
   if (page == "previous") {
     currentPage--;
-    getSearchMovie(event);
-  }
-  if (currentPage >= totalPages || currentPage === 0) {
-    console.log("NIE MA WIĘCEJ STRON");
+    getSearchMovie(event, "second");
   }
 
   if (page === "next" && currentPage > 3) {
@@ -222,29 +258,55 @@ const pagination = event => {
     move(gridTranslateX);
   }
 
-  if (window.matchMedia("(min-width: 767px)").matches) {
-    if (pageLeft <= 6 && page === "next") {
-      gridTranslateX = -(totalPages - 9) * 30;
-      move(gridTranslateX);
-    }
-    if (pageLeft < 6 && page == "previous") {
-      gridTranslateX = -(totalPages - 9) * 30;
-      move(gridTranslateX);
-    }
-  } else {
-    if (pageLeft <= 2 && page === "next") {
+  if (pageLeft <= 2 && page === "next") {
+    gridTranslateX = -(totalPages - 5) * 30;
+    move(gridTranslateX);
+  }
+  if (pageLeft < 2 && page == "previous") {
+    {
       gridTranslateX = -(totalPages - 5) * 30;
       move(gridTranslateX);
     }
-    if (pageLeft < 2 && page == "previous") {
-      {
-        gridTranslateX = -(totalPages - 5) * 30;
-        move(gridTranslateX);
-      }
-    }
+  }
+  if (nodeName === "LI") {
+    // console.log(pageLeft);
+    // if (Number(textContent) <= 3) {
+    //   gridTranslateX = 0;
+    //   move(gridTranslateX);
+    // }
+    // if (pageLeft < 3) {
+    //   gridTranslateX = -(totalPages - 5) * 30;
+    //   move(gridTranslateX);
+    // }
+    // if (Number(textContent) > 3 && currentPage >= 3) {
+    //   if (!pageLeft < 3) {
+    //     gridTranslateX = -(Number(textContent) - 3) * 30;
+    //     move(gridTranslateX);
+    //   }
+    // }
+
+    // if (Number(textContent) <= 3 && currentPage >= 3) {
+    //   gridTranslateX += (3 - Number(textContent)) * 30;
+    //   move(gridTranslateX);
+    // }
+
+    currentPage = Number(textContent);
+    getSearchMovie(event, "second");
   }
 
-  PAGINATION_GRID.dataset.page = currentPage;
+  if (event.target === firstItem) {
+    gridTranslateX = 0;
+    move(gridTranslateX);
+    currentPage = 1;
+    getSearchMovie(event, "second");
+  }
+
+  if (event.target === lastItem) {
+    gridTranslateX = -(totalPages - 5) * 30;
+    move(gridTranslateX);
+    currentPage = totalPages;
+    getSearchMovie(event, "second");
+  }
 
   // window.scrollTo({
   //   top: 0,

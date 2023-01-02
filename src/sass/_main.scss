@@ -87,6 +87,22 @@
   font-weight: 500;
   font-size: 12px;
   line-height: 16px;
+
+  &__additionalItem {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-basis: 14px;
+    flex-shrink: 0;
+    transition: transform 300ms ease-in, color 300ms ease-in,
+      display 300ms easy-in;
+    cursor: pointer;
+    &:hover,
+    &focus {
+      transform: scale(1.5);
+      color: $accent-color;
+    }
+  }
   &__containerGrid {
     overflow: hidden;
     width: 160px;
@@ -131,7 +147,7 @@
     align-items: center;
     width: 40px;
     height: 40px;
-    background: $secondary-background-color;
+    background: #f7f7f7;
     border-radius: 5px;
     transition: translate 300ms ease-in, background-color 300ms ease-in;
     cursor: pointer;
@@ -171,11 +187,6 @@
     }
     &__Item {
       flex-basis: calc((100% - 30px) / 2);
-    }
-  }
-  .Pagination {
-    &__containerGrid {
-      width: 280px;
     }
   }
 }
