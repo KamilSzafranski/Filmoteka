@@ -2,15 +2,15 @@ import "./JS/cookies";
 import { scrollFunction } from "./JS/topBtn";
 import "./JS/darkmode";
 import "./JS/library";
-import "./JS/firebase";
-import { getPopularMovie } from "./JS/main";
+import { getPopularMovie, getSearchMovie, SEARCH_BTN } from "./JS/main";
 import { renderLoader } from "./JS/loader";
-
-getPopularMovie();
+import "./JS/cookies";
+import "./JS/team-modal";
 
 window.onscroll = function () {
   scrollFunction();
 };
 
-import "./JS/cookies";
-import "./JS/team-modal";
+getPopularMovie();
+SEARCH_BTN.addEventListener("click", getSearchMovie);
+

@@ -44,12 +44,12 @@ a {
 //darkmode
 
 body.dark {
-  background-color: #18191a;
+  background-color: $darkmode-background-color;
   color: white;
 }
 
 .footer.dark {
-  background-color: 	#101010;
+  background-color: $secondary-background-color;
   color: white;
 }
 .darkmode-toggle {
@@ -60,7 +60,7 @@ body.dark {
   height: 30px;
   width: 70px;
   border-radius: 100px;
-  background-color: #f7f7f7;
+  background-color: $secondary-background-color;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   z-index: 1;
@@ -70,7 +70,7 @@ body.dark {
   position: absolute;
   height: 23px;
   width: 23px;
-  background: #ff6b08;
+  background: $accent-color;
   border-radius: 50%;
   top: 50%;
   left: 43px;
@@ -79,10 +79,10 @@ body.dark {
   transition: all 0.3s ease-in-out;
 }
 .darkmode-toggle.active::before {
-  background-color: #18191a;
+  background-color: $darkmode-background-color;
   left: calc(100% - 40px - 25px);
 }
 
 .darkmode-icon {
-  color: #ff6b08;
+  color: $accent-color;
 }
