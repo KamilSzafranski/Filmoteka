@@ -56,29 +56,49 @@ const createPaginationList = numberOfPage => {
     move(0);
   } else {
     lastItem.textContent = totalPages;
-    lastItem.style.display = "flex";
-    lastItem.previousElementSibling.style.display = "flex";
+    lastItem.style.visibility = "visible";
+    lastItem.previousElementSibling.style.visibility = "visible";
+    lastItem.style.opacity = "1";
+    lastItem.previousElementSibling.style.opacity = "1";
+    PAGINATION_CONTAINER.lastElementChild.style.transform = `translateX(0px)`;
   }
 
   if (totalPages - currentPage <= 2) {
-    lastItem.style.display = "none";
-    lastItem.previousElementSibling.style.display = "none";
+    lastItem.style.visibility = "hidden";
+    lastItem.previousElementSibling.style.visibility = "hidden";
+    lastItem.style.opacity = "0";
+    lastItem.previousElementSibling.style.opacity = "0";
+    PAGINATION_CONTAINER.lastElementChild.style.transform = `translateX(-60px)`;
   }
   if (currentPage > 3) {
-    firstItem.style.display = "flex";
-    firstItem.nextElementSibling.style.display = "flex";
+    console.log("e");
+    PAGINATION_CONTAINER.firstElementChild.style.transform = `translateX(0px)`;
+    firstItem.style.visibility = "visible";
+    firstItem.nextElementSibling.style.visibility = "visible";
+    firstItem.style.opacity = "1";
+    firstItem.nextElementSibling.style.opacity = "1";
   } else {
-    firstItem.style.display = "none";
-    firstItem.nextElementSibling.style.display = "none";
+    firstItem.style.visibility = "hidden";
+    firstItem.nextElementSibling.style.visibility = "hidden";
+    firstItem.style.opacity = "0";
+    firstItem.nextElementSibling.style.opacity = "0";
+    PAGINATION_CONTAINER.firstElementChild.style.transform = `translateX(60px)`;
   }
   if (currentPage === 1) {
-    PAGINATION_CONTAINER.firstElementChild.style.display = "none";
+    PAGINATION_CONTAINER.firstElementChild.style.visibility = "hidden";
+    PAGINATION_CONTAINER.firstElementChild.style.opacity = "0";
   } else {
-    PAGINATION_CONTAINER.firstElementChild.style.display = "flex";
+    PAGINATION_CONTAINER.firstElementChild.style.visibility = "visible";
+    PAGINATION_CONTAINER.firstElementChild.style.opacity = "1";
+    console.log(PAGINATION_CONTAINER.firstElementChild);
   }
   if (currentPage === totalPages) {
-    PAGINATION_CONTAINER.lastElementChild.style.display = "none";
-  } else PAGINATION_CONTAINER.lastElementChild.style.display = "flex";
+    PAGINATION_CONTAINER.lastElementChild.style.visibility = "hidden";
+    PAGINATION_CONTAINER.lastElementChild.style.opacity = "0";
+  } else {
+    PAGINATION_CONTAINER.lastElementChild.style.visibility = "visible";
+    PAGINATION_CONTAINER.lastElementChild.style.opacity = "1";
+  }
 };
 const displayMovie = (Movie, Category) => {
   [...galleryGrid.children].forEach((element, index) => {

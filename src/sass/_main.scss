@@ -89,13 +89,13 @@
   line-height: 16px;
 
   &__additionalItem {
-    display: none;
+    display: flex;
     justify-content: center;
     align-items: center;
     flex-basis: 14px;
     flex-shrink: 0;
-    transition: transform 300ms ease-in, color 300ms ease-in,
-      display 300ms easy-in;
+    transition: transform 1000ms linear, background-color 300ms ease-in,
+      visibility 300ms ease-in, opacity 300ms ease-in;
     cursor: pointer;
     &:hover,
     &focus {
@@ -149,7 +149,8 @@
     height: 40px;
     background: #f7f7f7;
     border-radius: 5px;
-    transition: translate 300ms ease-in, background-color 300ms ease-in;
+    transition: transform 700ms linear, background-color 300ms ease-in,
+      visibility 300ms ease-in, opacity 300ms ease-in;
     cursor: pointer;
     &:hover,
     :focus {
@@ -200,4 +201,9 @@
       flex-basis: calc((100% - 60px) / 3);
     }
   }
+}
+
+.is-hidden {
+  visibility: hidden;
+  opacity: 0;
 }
