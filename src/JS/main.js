@@ -240,7 +240,11 @@ https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`
     const dataSearchCategory = responseSearchCategory.genres;
 
     displayMovie(dataSearchMovie, dataSearchCategory);
+
     createPaginationList(totalPages);
+    if (count === "first") {
+      PAGINATION_GRID.style.transform = `translateX(0px)`;
+    }
   } catch (error) {
     console.error(error.message, error.code);
   }
