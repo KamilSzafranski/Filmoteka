@@ -18,11 +18,10 @@ let searchMovieOption = {
   language: "en-US",
 };
 
-let totalPages;
 let totalResults;
 let currentPage = 1;
 let results;
-let pageLeft;
+
 let firstItem = document.querySelector("div[data-add='first']");
 let lastItem = document.querySelector("div[data-add='last']");
 
@@ -61,7 +60,7 @@ const createPaginationList = numberOfPage => {
     lastItem.previousElementSibling.style.display = "flex";
   }
 
-  if (pageLeft <= 2) {
+  if (totalPages - currentPage <= 2) {
     lastItem.style.display = "none";
     lastItem.previousElementSibling.style.display = "none";
   }
@@ -235,8 +234,6 @@ const pagination = event => {
   } = event.target;
   event.preventDefault();
 
-  pageLeft = totalPages - currentPage;
-
   let gridTranslateX =
     PAGINATION_GRID.computedStyleMap().get("transform")[0].x.value;
 
@@ -258,39 +255,41 @@ const pagination = event => {
     move(gridTranslateX);
   }
 
-  if (pageLeft <= 2 && page === "next") {
+  if (totalPages - currentPage <= 2 && page === "next") {
     gridTranslateX = -(totalPages - 5) * 30;
     move(gridTranslateX);
   }
-  if (pageLeft < 2 && page == "previous") {
+  if (totalPages - currentPage < 2 && page == "previous") {
     {
       gridTranslateX = -(totalPages - 5) * 30;
       move(gridTranslateX);
     }
   }
   if (nodeName === "LI") {
-    // console.log(pageLeft);
-    // if (Number(textContent) <= 3) {
-    //   gridTranslateX = 0;
-    //   move(gridTranslateX);
-    // }
-    // if (pageLeft < 3) {
-    //   gridTranslateX = -(totalPages - 5) * 30;
-    //   move(gridTranslateX);
-    // }
-    // if (Number(textContent) > 3 && currentPage >= 3) {
-    //   if (!pageLeft < 3) {
-    //     gridTranslateX = -(Number(textContent) - 3) * 30;
-    //     move(gridTranslateX);
-    //   }
-    // }
-
-    // if (Number(textContent) <= 3 && currentPage >= 3) {
-    //   gridTranslateX += (3 - Number(textContent)) * 30;
-    //   move(gridTranslateX);
-    // }
-
     currentPage = Number(textContent);
+
+    if (Number(textContent) > 3 && currentPage >= 3) {
+      if (!(totalPages - Number(textContent)) < 3) {
+        gridTranslateX = -(Number(textContent) - 3) * 30;
+        move(gridTranslateX);
+      }
+    }
+
+    if (Number(textContent) <= 3 && currentPage >= 3) {
+      gridTranslateX += (3 - Number(textContent)) * 30;
+      move(gridTranslateX);
+      console.log("e");
+    }
+
+    if (Number(textContent) <= 3) {
+      gridTranslateX = 0;
+      move(gridTranslateX);
+    }
+    if (totalPages - Number(textContent) < 3) {
+      gridTranslateX = -(totalPages - 5) * 30;
+      move(gridTranslateX);
+    }
+
     getSearchMovie(event, "second");
   }
 
