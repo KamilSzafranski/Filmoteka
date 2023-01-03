@@ -1,41 +1,38 @@
-const MOVIE_KEY = "watch";
-
-const getMovie = () => {
+const getMovie = movieKey => {
   const defaultValue = [];
 
   try {
-    const localMovie = JSON.parse(localStorage.getItem(MOVIE_KEY));
+    const localMovie = JSON.parse(localStorage.getItem(movieKey));
     if (localMovie) {
       return localMovie;
     }
 
-    localStorage.setItem(MOVIE_KEY, JSON.stringify(defaultValue));
+    localStorage.setItem(movieKey, JSON.stringify(defaultValue));
     return defaultValue;
   } catch (error) {
     return defaultValue;
   }
 };
 
-const addMovie = movie => {
+const addMovie = (movieKey, movie) => {
   try {
-    const movies = getMovie();
+    const movies = getMovie(movieKey);
     movies.push(movie);
 
-    localStorage.setItem(MOVIE_KEY, JSON.stringify(movies));
+    localStorage.setItem(movieKey, JSON.stringify(movies));
   } catch (error) {
     console.error(error);
   }
 };
-
-const removeMovie = movie => {
+const removeMovie = (movieKey, movie) => {
   try {
-    const movies = getMovie();
+    const movies = getMovie(movieKey);
     const updatedMovie = movies.filter(n => n !== note);
 
-    localStorage.setItem(MOVIE_KEY, JSON.stringify(updatedMovie));
+    localStorage.setItem(movieKey, JSON.stringify(updatedMovie));
   } catch (error) {
     console.error(error);
   }
 };
 
-export { MOVIE_KEY, getMovie, addMovie, removeMovie };
+export { getMovie, addMovie, removeMovie };
