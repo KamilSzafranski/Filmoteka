@@ -19,6 +19,7 @@ let searchMovieOption = {
 };
 
 let totalResults;
+let totalPages;
 let currentPage = 1;
 let results;
 
@@ -55,6 +56,7 @@ const createPaginationList = numberOfPage => {
     }px`;
     move(0);
   } else {
+    PAGINATION_CONTAINER_GRID.style.width = "160px";
     lastItem.textContent = totalPages;
     lastItem.style.visibility = "visible";
     lastItem.previousElementSibling.style.visibility = "visible";
