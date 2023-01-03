@@ -19,6 +19,7 @@ let searchMovieOption = {
 };
 
 let totalResults;
+let totalPages;
 let currentPage = 1;
 let results;
 
