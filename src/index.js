@@ -1,4 +1,4 @@
-// import "./JS/cookies";
+import "./JS/cookies";
 import { scrollFunction } from "./JS/topBtn";
 import "./JS/darkmode";
 import "./JS/library";
