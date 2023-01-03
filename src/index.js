@@ -10,7 +10,7 @@ import {
   PAGINATION_CONTAINER,
 } from "./JS/main";
 import { renderLoader } from "./JS/loader";
-
+import { MOVIE_KEY, getMovie, addMovie, removeMovie } from "./JS/storage";
 window.onscroll = function () {
   scrollFunction();
 };
