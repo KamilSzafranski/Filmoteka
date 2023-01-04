@@ -18,3 +18,6 @@ window.onscroll = function () {
 getPopularMovie();
 SEARCH_BTN.addEventListener("click", getSearchMovie);
 PAGINATION_CONTAINER.addEventListener("click", pagination);
+
+import "./JS/team-modal";
+
