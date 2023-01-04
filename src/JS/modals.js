@@ -17,9 +17,10 @@ const modalListner = event => {
   if (type === "queue") {
     return addMovie(type, movie[0]);
   }
-  if (type === "close") {
+  if (type === "close" || event.code === "Escape") {
     modal.classList.add("is-hidden");
     window.removeEventListener("click", modalListner);
+    window.removeEventListener("keydown", modalListner);
     galleryGrid.addEventListener("click", openmodal);
   }
 };
