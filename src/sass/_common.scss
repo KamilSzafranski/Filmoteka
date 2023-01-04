@@ -4,14 +4,16 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  scroll-behavior: smooth;
 }
+
+
 body {
   margin: auto;
   position: relative;
   max-width: 100%;
   background-color: white;
   transition: all 0.3s ease-in-out;
+  scroll-behavior: smooth;
 }
 
 
@@ -85,4 +87,22 @@ body.dark {
 
 .darkmode-icon {
   color: $accent-color;
+}
+
+//scrollbar
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #545454; 
+}
+ 
+::-webkit-scrollbar-thumb {
+  background: $accent-color; 
+  border-radius: 7px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 107, 1, 0.6);; 
 }

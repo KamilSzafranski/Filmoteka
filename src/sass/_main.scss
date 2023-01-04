@@ -30,6 +30,9 @@
   &__PhotoContainer {
     margin-bottom: 20px;
   }
+  &__Grid {
+    margin-bottom: 40px;
+  }
   &__Img {
     display: block;
     width: 100%;
@@ -75,6 +78,97 @@
   margin-bottom: 10px;
   max-width: 480px;
 }
+
+.Pagination {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+
+  &__additionalItem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-basis: 14px;
+    flex-shrink: 0;
+    transition: transform 1000ms linear, background-color 300ms ease-in,
+      visibility 300ms ease-in, opacity 300ms ease-in;
+    cursor: pointer;
+    &:hover,
+    &focus {
+      transform: scale(1.5);
+      color: $accent-color;
+    }
+  }
+  &__containerGrid {
+    overflow: hidden;
+    width: 160px;
+  }
+  &__grid {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: transform 300ms ease-in;
+    transform: translateX(0);
+  }
+  &__item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-basis: 14px;
+    flex-shrink: 0;
+    transition: transform 300ms ease-in, color 300ms ease-in;
+    cursor: pointer;
+    &:hover,
+    &focus {
+      transform: scale(1.5);
+      color: $accent-color;
+    }
+    &--active {
+      flex-basis: 40px;
+      height: 40px;
+      background-color: $accent-color;
+      border-radius: 5px;
+      color: white;
+      &:hover,
+      focus {
+        background-color: black;
+        transform: scale(1.05);
+        color: white;
+      }
+    }
+  }
+  &__arrow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background: #f7f7f7;
+    border-radius: 5px;
+    transition: transform 700ms linear, background-color 300ms ease-in,
+      visibility 300ms ease-in, opacity 300ms ease-in;
+    cursor: pointer;
+    &:hover,
+    :focus {
+      transform: scale(1.1);
+      background-color: $accent-color;
+      color: white;
+    }
+  }
+  &__icon {
+    height: 16px;
+    width: 16px;
+    fill: currentColor;
+    &--right {
+      transform: rotate(180deg);
+    }
+  }
+}
+
 @media screen and (min-width: 500px) and (max-width: 767px) {
   .skeleton {
     width: 439px;
@@ -107,4 +201,9 @@
       flex-basis: calc((100% - 60px) / 3);
     }
   }
+}
+
+.is-hidden {
+  visibility: hidden;
+  opacity: 0;
 }
