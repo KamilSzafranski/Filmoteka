@@ -5,7 +5,7 @@
     justify-content: center;
     color: $footer-text-color;
     line-height: 16.41px;
-    background-color: $secondary-background-color;
+    background-color: $footer-background-color;
     padding-top: 30px;
     padding-bottom: 28px;
 
@@ -17,7 +17,7 @@
             text-decoration: underline;
             cursor: pointer;
             color: $footer-text-color;
-            transition: all 0.3s ease-in-out;
+            transition: all 0.2s ease-in-out;
 
             &:hover {
                 color: $accent-color;
