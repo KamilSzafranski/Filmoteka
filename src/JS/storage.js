@@ -17,6 +17,11 @@ const getMovie = movieKey => {
 const addMovie = (movieKey, movie) => {
   try {
     const movies = getMovie(movieKey);
+
+    if (movies.some(element => element.id === movie.id)) {
+      return console.log("ALRETY IN STOCK");
+    }
+
     movies.push(movie);
 
     localStorage.setItem(movieKey, JSON.stringify(movies));

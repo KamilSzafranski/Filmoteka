@@ -1,4 +1,5 @@
 import image from "../images/nocover.png";
+import { openmodal } from "./modals";
 
 const GALLERY = document.querySelector("ul.MainPage__Grid");
 const GALLERY_TEMPLATE = document.querySelector("template.GalleryTemplate");
@@ -194,6 +195,7 @@ const getPopularMovie = async () => {
     const dataPopularCategory = responsePopularCategory.genres;
 
     displayMovie(dataPopularMovie, dataPopularCategory);
+    galleryGrid.addEventListener("click", openmodal);
   } catch (error) {
     console.error(error.message);
   }
@@ -345,6 +347,8 @@ export {
   pagination,
   SEARCH_BTN,
   PAGINATION_CONTAINER,
+  API_KEY,
+  galleryGrid,
 };
 
 const move = value => {
