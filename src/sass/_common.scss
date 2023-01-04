@@ -54,6 +54,11 @@ body.dark {
   background-color: $secondary-background-color;
   color: white;
 }
+
+.footer.dark a {
+  color: white;
+}
+
 .darkmode-toggle {
   display: flex;
   align-items: center;
