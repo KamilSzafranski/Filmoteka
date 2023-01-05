@@ -20,4 +20,5 @@ SEARCH_BTN.addEventListener("click", getSearchMovie);
 PAGINATION_CONTAINER.addEventListener("click", pagination);
 
 import { toggleModal } from "./JS/team-modal";
+import "./JS/empty-lib";
 

@@ -19,7 +19,7 @@ const addMovie = (movieKey, movie) => {
     const movies = getMovie(movieKey);
 
     if (movies.some(element => element.id === movie.id)) {
-      return console.log("ALRETY IN STOCK");
+      return console.log("ALREADY IN STOCK");
     }
 
     movies.push(movie);
