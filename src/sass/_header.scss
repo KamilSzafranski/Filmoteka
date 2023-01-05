@@ -14,7 +14,8 @@
 
   @media screen and (max-width: 767px) {
     padding-top: 42px;
-
+    min-width: 320px;
+    height: 230px;
     background-image: url("../images/header-mobile.jpg");
 
     @media (min-device-pixel-ratio: 2),
@@ -223,9 +224,7 @@ header.header--bgc {
   margin: 0 auto;
 
   @media screen and (max-width: 767px) {
-    max-width: 320px;
-    padding-left: 20px;
-    padding-right: 20px;
+    width: 320px;
   }
 
   @media screen and (min-width: 768px) {
@@ -255,9 +254,10 @@ header.header--bgc {
   align-items: center;
 
   @media screen and (max-width: 767px) {
-    margin-bottom: 62px;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
+    width: 320px;
+    margin-bottom: 50px;
   }
 
   @media screen and (min-width: 768px) and (max-width: 1199px) {
@@ -322,7 +322,9 @@ header.header--bgc {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-
+  @media screen and (max-width: 767px) {
+    margin: 0 auto;
+  }
   @media screen and (min-width: 768px) and (max-width: 1199px) {
     margin-right: 100px;
   }
@@ -441,7 +443,7 @@ input:-webkit-autofill {
   justify-content: center;
 
   @media screen and (max-width: 767px) {
-    right: 0;
+    right: 20px;
   }
 
   @media screen and (min-width: 768px) and (max-width: 1199px) {
@@ -584,14 +586,14 @@ input:-webkit-autofill {
   border-radius: 3px;
   background-color: transparent;
   border-color: $secondary-text-color;
-
-  font-size: 10px;
+  font-weight: 700;
+  font-size: 12px;
   line-height: 1.33;
 
   transition: background-color 250ms $animation-function;
 
   @media screen and (max-width: 1199px) {
-    font-size: 8px;
+    font-size: 12px;
     line-height: 1.2;
   }
 }

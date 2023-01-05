@@ -2,7 +2,7 @@ const headerSearch = document.querySelector(".js-box");
 const library = document.querySelector("#library");
 const home = document.querySelector("#home");
 const header = document.querySelector(".header");
-
+const searchLabel = document.querySelector(".header__label");
 const libraryCreation = e => {
   e.preventDefault();
   headerSearch.innerHTML = "";
@@ -11,6 +11,7 @@ const libraryCreation = e => {
   library.classList.add("nav-list__link--active");
   home.classList.remove("nav-list__link--active");
   header.classList.add("header--bgc");
+  searchLabel.classList.add("button-hidden");
 };
 
 library.addEventListener("click", libraryCreation);

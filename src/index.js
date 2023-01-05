@@ -21,3 +21,4 @@ PAGINATION_CONTAINER.addEventListener("click", pagination);
 
 import "./JS/team-modal";
 
+import "./JS/firebase";
