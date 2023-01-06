@@ -4,7 +4,6 @@ const modal = document.querySelector(".temporaryModa");
 let movie = [];
 
 const modalListner = event => {
-  console.log(movie);
   event.preventDefault();
   const {
     dataset: { type },

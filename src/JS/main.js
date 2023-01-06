@@ -165,9 +165,15 @@ const displayMovie = (Movie, Category, type = "normal") => {
             movieCategory === "" ? "No type in database" : movieCategory
           }`;
           if (type === "library") {
-            listElement.textContent = Movie[index].genres
+            console.log(Movie[index]);
+            const movieLibraryCategory = Movie[index].genres
               .map(e => e.name)
               .join(", ");
+            listElement.textContent = `${
+              movieLibraryCategory === ""
+                ? "No type in database"
+                : movieLibraryCategory
+            }`;
           }
         }
 
@@ -208,7 +214,6 @@ const getLibraryMovie = async (type, count = "first") => {
 
     totalResults = libraryMovie.length;
     totalPages = Math.ceil(libraryMovie.length / 20);
-    console.log(libraryMovie, totalResults, totalPages);
 
     results = libraryMovie.length;
 
