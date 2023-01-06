@@ -4,6 +4,17 @@
     pointer-events: none;
 }
 
+.visually-hidden {
+    position: absolute !important;
+    clip: rect(1px 1px 1px 1px);
+    clip: rect(1px, 1px, 1px, 1px);
+    padding: 0 !important;
+    border: 0 !important;
+    height: 1px !important;
+    width: 1px !important;
+    overflow: hidden;
+}
+
 .backdrop {
     position: fixed;
     left: 0;
@@ -12,7 +23,8 @@
     height: 100%;
     background: rgba(0, 0, 0, 0.6);
     transition: opacity 250ms, visibility 250ms cubic-bezier(0.4, 0, 0.2, 2);
-    z-index: 1
+    z-index: 1;
+    overflow-y: scroll;
 }
 
 .team-modal {
@@ -59,7 +71,6 @@
     &--icon {
         width: 25px;
         height: 25px;
-       /*  fill: rgba( 255, 255, 255, 0.18 ); */
         transition: fill 250ms $animation-function; 
         }
     }
@@ -135,7 +146,7 @@
 
 
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
-    .modal {
+    .team-modal {
         min-width: 748px;
     }
     .team__wrapper {
@@ -149,7 +160,7 @@
 }
 
 @media only screen and (min-width: 1024px) {
-    .modal {
+    .team-modal {
         min-width: 1004px;
     }
 
