@@ -4,7 +4,6 @@ const modal = document.querySelector(".temporaryModa");
 let movie = [];
 
 const modalListner = event => {
-  console.log("E");
   console.log(movie);
   event.preventDefault();
   const {
@@ -17,10 +16,9 @@ const modalListner = event => {
   if (type === "queue") {
     return addMovie(type, movie[0]);
   }
-  if (type === "close" || event.code === "Escape") {
+  if (type === "close") {
     modal.classList.add("is-hidden");
     window.removeEventListener("click", modalListner);
-    window.removeEventListener("keydown", modalListner);
     galleryGrid.addEventListener("click", openmodal);
   }
 };
