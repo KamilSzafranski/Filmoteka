@@ -68,6 +68,12 @@ body.dark {
     display: flex;
     position: absolute;
     top: 6px;
+    right: 0.2%;
+  }
+  @media screen and (min-width: 768px) {
+    display: flex;
+    position: absolute;
+    top: 6px;
     right: 1%;
   }
 }
