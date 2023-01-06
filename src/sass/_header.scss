@@ -292,7 +292,7 @@ header.header--bgc {
     }
 
     @media screen and (min-width: 1200px) {
-      margin-right: 500px;
+      margin-right: 400px;
     }
   }
 }
@@ -629,6 +629,7 @@ input:-webkit-autofill {
   }
   @media (min-width: 768px) and (max-width: 1198px) {
     width: fit-content;
+    right: 15%;
   }
   @media (min-width: 1199px) {
     right: 10%;
@@ -653,8 +654,15 @@ input:-webkit-autofill {
   //   right: 38%;
   // }
   @media (min-width: 1200px) {
-    right: 85;
-    top: 100;
+    right: 38%;
+    top: 60;
+  }
+  &:hover {
+    background-color: $accent-color;
+    background-size: 20px;
+  }
+  &:focus {
+    background-color: $accent-color;
   }
 }
 
