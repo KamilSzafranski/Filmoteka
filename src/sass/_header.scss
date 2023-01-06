@@ -287,15 +287,16 @@ header.header--bgc {
 
     @media screen and (min-width: 1199px) {
     }
-    @media screen and (min-width: 768px) and (max-width: 1199px) {
+    @media screen and (min-width: 768px) and (max-width: 1198px) {
       margin-right: 80px;
     }
 
-    @media screen and (min-width: 1200px) {
-      margin-right: 400px;
+    @media screen and (min-width: 1199px) {
+      margin-right: 500px;
     }
   }
 }
+
 .logo-text {
   display: block;
   font-family: $main-font;
@@ -327,6 +328,46 @@ header.header--bgc {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  &__link {
+    color: $secondary-text-color;
+    text-transform: uppercase;
+    font-size: 12px;
+    line-height: 1.17;
+    font-family: $main-font;
+    font-weight: 500;
+    -webkit-transition: 250ms color $animation-function,
+      250ms -webkit-transform $animation-function;
+    transition: 250ms color $animation-function,
+      250ms -webkit-transform $animation-function;
+    -o-transition: 250ms color $animation-function,
+      250ms transform $animation-function;
+    transition: 250ms color $animation-function,
+      250ms transform $animation-function;
+    transition: 250ms color $animation-function,
+      250ms transform $animation-function,
+      250ms -webkit-transform $animation-function;
+    &:hover {
+      color: $accent-color;
+      -webkit-transform: scale(1.05);
+      -ms-transform: scale(1.05);
+      transform: scale(1.05);
+    }
+
+    &--active {
+      position: relative;
+      &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -2px;
+        display: inline-block;
+        width: 100%;
+        height: 3px;
+        background-color: $accent-color;
+      }
+    }
+  }
+
   @media screen and (max-width: 767px) {
     margin: 0 auto;
   }
@@ -336,28 +377,9 @@ header.header--bgc {
   &__item:not(:last-child) {
     margin-right: 40px;
   }
-  &__link {
-    color: $secondary-text-color;
-    text-transform: uppercase;
-    font-size: 12px;
-    line-height: 1.17;
-    font-family: $main-font;
-    &--active {
-      position: relative;
 
-      &::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        bottom: -2px;
-
-        display: inline-block;
-        width: 100%;
-        height: 3px;
-
-        background-color: $accent-color;
-      }
-    }
+  @media screen and (min-width: 1199px) {
+    margin-right: 30px;
   }
 }
 
@@ -571,20 +593,20 @@ input:-webkit-autofill {
   @media screen and (max-width: 767px) {
     position: absolute;
     left: 80%;
-    top: 0.4%;
+    top: 40;
     display: flex;
     justify-content: center;
     align-items: center;
   }
-  @media (min-width: 768px) and (max-width: 1199px) {
+  @media (min-width: 768px) and (max-width: 1198px) {
     position: absolute;
     top: 20px;
     left: 75%;
   }
-  @media (min-width: 1200px) {
-    position: absolute;
-    top: 20px;
-    right: 10%;
+  @media screen and (min-width: 1199px) {
+    position: relative;
+    top: -10;
+    right: 90%;
   }
 }
 
@@ -632,31 +654,37 @@ input:-webkit-autofill {
     right: 15%;
   }
   @media (min-width: 1199px) {
-    right: 10%;
+    position: relative;
+    top: 3;
   }
 }
-
+.google-btn {
+  @media (min-width: 1199px) {
+    position: relative;
+    top: 3;
+    left: -700%;
+  }
+}
 .google-btn--logout {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 5px;
+  cursor: pointer;
+
   @media screen and (max-width: 767px) {
     top: 45;
-    right: 30%;
+    right: 40%;
   }
   @media (min-width: 768px) and (max-width: 1198px) {
-    right: 38%;
+    right: 43%;
     top: 60;
   }
-  // @media (min-width: 1199px) and (max-width: 1199px) {
-  //   top: 60;
-  //   right: 38%;
-  // }
-  @media (min-width: 1200px) {
-    right: 38%;
+  @media screen and (min-width: 1200px) {
+    position: absolute;
     top: 60;
+    right: 42%;
   }
+
   &:hover {
     background-color: $accent-color;
     background-size: 20px;
