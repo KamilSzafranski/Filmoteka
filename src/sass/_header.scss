@@ -286,7 +286,6 @@ header.header--bgc {
     }
 
     @media screen and (min-width: 1199px) {
-      margin-right: 500px;
     }
     @media screen and (min-width: 768px) and (max-width: 1199px) {
       margin-right: 80px;
@@ -331,7 +330,7 @@ header.header--bgc {
   @media screen and (max-width: 767px) {
     margin: 0 auto;
   }
-  @media screen and (min-width: 768px) and (max-width: 1199px) {
+  @media screen and (min-width: 768px) and (max-width: 1198px) {
     margin-right: 100px;
   }
   &__item:not(:last-child) {
@@ -452,7 +451,7 @@ input:-webkit-autofill {
     right: 20px;
   }
 
-  @media screen and (min-width: 768px) and (max-width: 1199px) {
+  @media screen and (min-width: 768px) and (max-width: 1198px) {
     right: 182px;
   }
 
@@ -499,7 +498,7 @@ input:-webkit-autofill {
     height: 44px;
   }
 
-  @media screen and (min-width: 768px) and (max-width: 1199px) {
+  @media screen and (min-width: 768px) and (max-width: 1198px) {
     width: 152px;
     height: 44px;
   }
@@ -531,15 +530,19 @@ input:-webkit-autofill {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  position: relative;
 
   @media screen and (max-width: 767px) {
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
-    justify-content: space-between;
+    justify-content: space-around;
   }
 
-  @media screen and (min-width: 768px) {
-    padding-bottom: 60px;
+  @media (min-width: 768px) and (max-width: 1199px) {
+    margin-bottom: 90px;
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
@@ -572,6 +575,16 @@ input:-webkit-autofill {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  @media (min-width: 768px) and (max-width: 1199px) {
+    position: absolute;
+    top: 20px;
+    left: 75%;
+  }
+  @media (min-width: 1200px) {
+    position: absolute;
+    top: 20px;
+    right: 10%;
   }
 }
 
@@ -606,12 +619,19 @@ input:-webkit-autofill {
   font-weight: 700;
   font-size: 12px;
   line-height: 1.33;
-
+  position: absolute;
+  top: 50;
+  right: 5%;
   transition: background-color 250ms $animation-function;
-
-  @media screen and (max-width: 1199px) {
-    font-size: 12px;
-    line-height: 1.2;
+  @media screen and (max-width: 767px) {
+    top: 65;
+    right: 10%;
+  }
+  @media (min-width: 768px) and (max-width: 1198px) {
+    width: fit-content;
+  }
+  @media (min-width: 1199px) {
+    right: 10%;
   }
 }
 
@@ -620,15 +640,21 @@ input:-webkit-autofill {
   justify-content: center;
   align-items: center;
   margin-right: 5px;
-}
-
-.google-btn--pos {
   @media screen and (max-width: 767px) {
-    margin-top: -46px;
+    top: 45;
+    right: 30%;
   }
-
-  @media screen and (min-width: 768px) and (max-width: 1199px) {
-    margin-bottom: 5px;
+  @media (min-width: 768px) and (max-width: 1198px) {
+    right: 38%;
+    top: 60;
+  }
+  // @media (min-width: 1199px) and (max-width: 1199px) {
+  //   top: 60;
+  //   right: 38%;
+  // }
+  @media (min-width: 1200px) {
+    right: 85;
+    top: 100;
   }
 }
 
