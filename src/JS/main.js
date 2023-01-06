@@ -2,6 +2,7 @@ import nocover from "../images/nocover.png";
 import { openmodal } from "./modals";
 import { getMovie } from "./storage";
 import empty from "../images/empty_library.png";
+import nothing from "../images/nothing3.png";
 
 const GALLERY = document.querySelector("ul.MainPage__Grid");
 const GALLERY_TEMPLATE = document.querySelector("template.GalleryTemplate");
@@ -237,7 +238,7 @@ const getLibraryMovie = async (type, count = "first") => {
 
   results = libraryDataMovie.length;
 
-  if (type === "all" && totalResults === 0) {
+  if (totalResults === 0) {
     galleryGrid.innerHTML = `<img class="empty" alt="empty "  src="${empty}"> `;
     PAGINATION_GRID.style.display = "none";
     return;
@@ -320,7 +321,7 @@ const getSearchMovie = async (event, count = "first") => {
     results = responseSearchMovie.results.length;
 
     if (totalResults === 0) {
-      galleryGrid.innerHTML = `<img class="empty" alt="empty "  src="${empty}"> `;
+      galleryGrid.innerHTML = `<img class="empty" alt="empty "  src="${nothing}"> `;
       PAGINATION_GRID.style.display = "none";
       return;
     } else {
