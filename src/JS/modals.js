@@ -1,6 +1,8 @@
 import { galleryGrid, API_KEY } from "./main";
 import { addMovie } from "./storage";
-const modal = document.querySelector(".temporaryModa");
+
+const modal = document.querySelector(".modal-backdrop");
+
 let movie = [];
 
 const modalListner = event => {
@@ -15,9 +17,10 @@ const modalListner = event => {
   if (type === "queue") {
     return addMovie(type, movie[0]);
   }
-  if (type === "close") {
+  if (type === "close" || event.code === "Escape") {
     modal.classList.add("is-hidden");
     window.removeEventListener("click", modalListner);
+    window.removeEventListener("keydown", modalListner);
     galleryGrid.addEventListener("click", openmodal);
   }
 };
@@ -27,7 +30,7 @@ const openmodal = async event => {
     nodeName,
     dataset: { id },
   } = event.target;
-  const modal = document.querySelector(".temporaryModa");
+  const modal = document.querySelector(".modal-backdrop");
   if (nodeName !== "IMG") return;
 
   modal.classList.remove("is-hidden");
@@ -38,6 +41,7 @@ const openmodal = async event => {
   );
 
   const data = await response.json();
+
   movie = [];
   movie.push(data);
 
