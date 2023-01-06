@@ -107,6 +107,9 @@ const createPaginationList = numberOfPage => {
 };
 const displayMovie = (Movie, Category, type = "normal") => {
   [...galleryGrid.children].forEach((element, index) => {
+    if (Movie[index].status_code) {
+      return;
+    }
     let {
       title,
       name,
@@ -165,7 +168,6 @@ const displayMovie = (Movie, Category, type = "normal") => {
             movieCategory === "" ? "No type in database" : movieCategory
           }`;
           if (type === "library") {
-            console.log(Movie[index]);
             const movieLibraryCategory = Movie[index].genres
               .map(e => e.name)
               .join(", ");
@@ -217,7 +219,6 @@ const getLibraryMovie = async (type, count = "first") => {
 
     results = libraryMovie.length;
 
-    console.log(results);
     if (results < 20) {
       const removeRemainingSkeleton = [...GALLERY.children].forEach(
         (remainingElement, remainingIndex) => {
@@ -252,7 +253,7 @@ const getPopularMovie = async () => {
     );
     const responsePopularMovie = await getPopularMovie.json();
     const dataPopularMovie = responsePopularMovie.results;
-
+    console.log(responsePopularMovie);
     const getPopularMovieCategory = await fetch(
       `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`
     );
@@ -371,7 +372,6 @@ const pagination = event => {
     if (Number(textContent) <= 3 && currentPage >= 3) {
       gridTranslateX += (3 - Number(textContent)) * 30;
       move(gridTranslateX);
-      console.log("e");
     }
 
     if (Number(textContent) <= 3) {
