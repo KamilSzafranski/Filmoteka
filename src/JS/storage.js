@@ -17,7 +17,10 @@ const getMovie = movieKey => {
 const addMovie = (movieKey, movie) => {
   try {
     const movies = getMovie(movieKey);
-
+    console.log(movie);
+    if (movie.success === false) {
+      return console.log("Nie dodano");
+    }
     // if (movies.some(element => element.id === movie.id)) {
     //   return console.log("ALREADY IN STOCK");
     // }

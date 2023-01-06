@@ -21,6 +21,7 @@ const libraryCreation = e => {
   header.classList.add("header--bgc");
   searchLabel.classList.add("button-hidden");
   Notiflix.Notify.info("Log in for more features!");
+  getLibraryMovie("all");
 };
 
 library.addEventListener("click", libraryCreation);
@@ -29,6 +30,7 @@ const pozniejNazwaNieTeraz = event => {
   const {
     dataset: { library },
   } = event.target;
+  libraryMode = library;
 
   if (library === "watch") {
     getLibraryMovie(library);
