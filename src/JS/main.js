@@ -1,5 +1,6 @@
 import image from "../images/nocover.png";
 import { openmodal } from "./modals";
+import { getMovie } from "./storage";
 
 const GALLERY = document.querySelector("ul.MainPage__Grid");
 const GALLERY_TEMPLATE = document.querySelector("template.GalleryTemplate");
@@ -23,6 +24,7 @@ let totalResults;
 let totalPages;
 let currentPage = 1;
 let results;
+let currentLibraryPage = 1;
 
 let firstItem = document.querySelector("div[data-add='first']");
 let lastItem = document.querySelector("div[data-add='last']");
@@ -103,7 +105,7 @@ const createPaginationList = numberOfPage => {
     PAGINATION_CONTAINER.lastElementChild.style.opacity = "1";
   }
 };
-const displayMovie = (Movie, Category) => {
+const displayMovie = (Movie, Category, type = "normal") => {
   [...galleryGrid.children].forEach((element, index) => {
     let {
       title,
@@ -122,7 +124,7 @@ const displayMovie = (Movie, Category) => {
         : `https://image.tmdb.org/t/p/w500${poster_path}`;
 
     const markup = `<img class="MainPage__Img skeleton" alt="Poster of movie:${
-      title || name
+      name || title
     }"  src="${poster}" data-id="${id}"/>`;
 
     const listDescendant = [...element.querySelectorAll("*")].forEach(
@@ -142,24 +144,37 @@ const displayMovie = (Movie, Category) => {
           listElement.classList.remove("skeleton__text");
           listElement.after("|");
 
-          const movieAllCategory = genreID.flatMap(dataMovieGenreID => {
-            return Category.flatMap(categoryElement =>
-              dataMovieGenreID === categoryElement.id
-                ? categoryElement.name
-                : []
-            );
-          });
+          if (type === "normal") {
+            const movieAllCategory = genreID.flatMap(dataMovieGenreID => {
+              return Category.flatMap(categoryElement =>
+                dataMovieGenreID === categoryElement.id
+                  ? categoryElement.name
+                  : []
+              );
+            });
 
-          if (movieAllCategory.length >= 4) {
-            movieCategory =
-              movieAllCategory.slice(0, 3).join(", ") + " " + "...";
-          } else {
-            movieCategory = movieAllCategory.join(", ");
+            if (movieAllCategory.length >= 4) {
+              movieCategory =
+                movieAllCategory.slice(0, 3).join(", ") + " " + "...";
+            } else {
+              movieCategory = movieAllCategory.join(", ");
+            }
           }
 
           listElement.textContent = `${
             movieCategory === "" ? "No type in database" : movieCategory
           }`;
+          if (type === "library") {
+            console.log(Movie[index]);
+            const movieLibraryCategory = Movie[index].genres
+              .map(e => e.name)
+              .join(", ");
+            listElement.textContent = `${
+              movieLibraryCategory === ""
+                ? "No type in database"
+                : movieLibraryCategory
+            }`;
+          }
         }
 
         if (listElement.classList.contains("MainPage__PhotoYear")) {
@@ -177,6 +192,56 @@ const displayMovie = (Movie, Category) => {
       }
     );
   });
+};
+
+const getLibraryMovie = async (type, count = "first") => {
+  try {
+    if (count === "first") {
+      currentPage = 1;
+    }
+
+    GALLERY.innerHTML = "";
+
+    createTemplateGallery(NUMBEF_OF_PHOTO);
+    let libraryMovie;
+    if (type === "watch") {
+      libraryMovie = getMovie(type);
+    }
+
+    if (type === "queue") {
+      libraryMovie = getMovie(type);
+    }
+
+    totalResults = libraryMovie.length;
+    totalPages = Math.ceil(libraryMovie.length / 20);
+
+    results = libraryMovie.length;
+
+    console.log(results);
+    if (results < 20) {
+      const removeRemainingSkeleton = [...GALLERY.children].forEach(
+        (remainingElement, remainingIndex) => {
+          if (remainingIndex >= results) remainingElement.remove();
+        }
+      );
+    }
+
+    const getSearchMovieCategory = await fetch(
+      `
+https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`
+    );
+    const responseSearchCategory = await getSearchMovieCategory.json();
+    const dataSearchCategory = responseSearchCategory.genres;
+
+    displayMovie(libraryMovie, dataSearchCategory, "library");
+
+    createPaginationList(totalPages);
+    if (count === "first") {
+      PAGINATION_GRID.style.transform = `translateX(0px)`;
+    }
+  } catch (error) {
+    console.error(error.message, error.code);
+  }
 };
 
 const getPopularMovie = async () => {
@@ -349,6 +414,7 @@ export {
   PAGINATION_CONTAINER,
   API_KEY,
   galleryGrid,
+  getLibraryMovie,
 };
 
 const move = value => {
