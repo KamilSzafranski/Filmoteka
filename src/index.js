@@ -2,12 +2,24 @@ import "./JS/cookies";
 import { scrollFunction } from "./JS/topBtn";
 import "./JS/darkmode";
 import "./JS/library";
-import { getPopularMovie, getSearchMovie, SEARCH_BTN } from "./JS/main";
+import {
+  getPopularMovie,
+  getSearchMovie,
+  pagination,
+  SEARCH_BTN,
+  PAGINATION_CONTAINER,
+} from "./JS/main";
 import { renderLoader } from "./JS/loader";
-
+import { MOVIE_KEY, getMovie, addMovie, removeMovie } from "./JS/storage";
 window.onscroll = function () {
   scrollFunction();
 };
 
 getPopularMovie();
 SEARCH_BTN.addEventListener("click", getSearchMovie);
+PAGINATION_CONTAINER.addEventListener("click", pagination);
+
+import { toggleModal } from "./JS/team-modal";
+import "./JS/empty-lib";
+
+import "./JS/firebase";
