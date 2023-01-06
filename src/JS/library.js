@@ -14,8 +14,8 @@ Notiflix.Notify.init({
 const libraryCreation = e => {
   e.preventDefault();
   headerSearch.innerHTML = "";
-  headerSearch.innerHTML = `<div class="js-box--padding"><button class="btn-watched btn-active" data-library ="watch"type="button">Watched</button>
-        <button class="btn-queue" data-library ="queue" type="button">Queue</button></div>`;
+  headerSearch.innerHTML = `<div class="js-box--padding"><button id="btn-watched" class="btn-watched btn-active" data-library ="watch"type="button">Watched</button>
+        <button id="btn-queue" class="btn-queue" data-library ="queue" type="button">Queue</button></div>`;
   library.classList.add("nav-list__link--active");
   home.classList.remove("nav-list__link--active");
   header.classList.add("header--bgc");
