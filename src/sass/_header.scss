@@ -459,8 +459,9 @@ input:-webkit-autofill {
   transition: -webkit-transform 250ms $animation-function;
   -o-transition: transform 250ms $animation-function;
   transition: transform 250ms $animation-function;
-  transition: transform 250ms $animation-function,
+  transition: all 250ms $animation-function,
     -webkit-transform 250ms $animation-function;
+
   margin-left: 380px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -493,6 +494,7 @@ input:-webkit-autofill {
     -webkit-transform: scale(1.5);
     -ms-transform: scale(1.5);
     transform: scale(1.5);
+    color: $accent-color;
   }
 }
 
@@ -591,17 +593,17 @@ input:-webkit-autofill {
   flex-direction: column;
   align-items: center;
   @media screen and (max-width: 767px) {
-    position: absolute;
-    left: 80%;
-    top: 40;
+    position: relative;
+    left: 10%;
+    top: -4;
     display: flex;
     justify-content: center;
     align-items: center;
   }
   @media (min-width: 768px) and (max-width: 1198px) {
-    position: absolute;
-    top: 20px;
-    left: 75%;
+    position: relative;
+    top: -3;
+    left: -120%;
   }
   @media screen and (min-width: 1199px) {
     position: relative;
@@ -643,16 +645,20 @@ input:-webkit-autofill {
   font-size: 12px;
   line-height: 1.33;
   position: absolute;
+  transition: 250ms color $animation-function,
+    250ms transform $animation-function;
   top: 50;
   right: 5%;
-  transition: background-color 250ms $animation-function;
+  transition: fill 250ms $animation-function;
   @media screen and (max-width: 767px) {
-    top: 65;
+    position: relative;
+    top: 3;
     right: 10%;
   }
   @media (min-width: 768px) and (max-width: 1198px) {
-    width: fit-content;
-    right: 15%;
+    position: relative;
+    top: 4;
+    right: 150;
   }
   @media (min-width: 1199px) {
     position: relative;
@@ -660,6 +666,8 @@ input:-webkit-autofill {
   }
 }
 .google-btn {
+  transition: 250ms color $animation-function,
+    250ms transform $animation-function;
   @media (min-width: 1199px) {
     position: relative;
     top: 3;
@@ -671,27 +679,31 @@ input:-webkit-autofill {
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  transition: 250ms color $animation-function,
+    250ms transform $animation-function;
 
   @media screen and (max-width: 767px) {
-    top: 45;
-    right: 40%;
+    position: relative;
+    top: 5;
+    right: 5;
   }
   @media (min-width: 768px) and (max-width: 1198px) {
-    right: 43%;
-    top: 60;
+    position: relative;
+    right: 4;
+    top: 10;
   }
-  @media screen and (min-width: 1200px) {
+  @media screen and (min-width: 1199px) {
     position: absolute;
     top: 60;
     right: 42%;
   }
 
   &:hover {
-    background-color: $accent-color;
+    color: $accent-color;
     background-size: 20px;
   }
   &:focus {
-    background-color: $accent-color;
+    color: $accent-color;
   }
 }
 
@@ -699,7 +711,7 @@ input:-webkit-autofill {
 .google-btn:focus,
 .google-btn--logout:hover,
 .google-btn--logout:focus {
-  background-color: $accent-color;
+  color: $accent-color;
 }
 
 .button-hidden {

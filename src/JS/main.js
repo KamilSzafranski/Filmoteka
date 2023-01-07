@@ -203,72 +203,73 @@ const displayMovie = (Movie, Category, type = "normal") => {
 };
 
 const getLibraryMovie = async (type, count = "first") => {
-  // try {
-  if (count === "first") {
-    currentPage = 1;
-  }
-  mode = "library";
+  try {
+    if (count === "first") {
+      currentPage = 1;
+    }
+    mode = "library";
 
-  GALLERY.innerHTML = "";
+    GALLERY.innerHTML = "";
 
-  createTemplateGallery(NUMBEF_OF_PHOTO);
-  let libraryMovie;
-  if (type === "watch") {
-    libraryMode = "watch";
-    libraryMovie = getMovie(type);
-  }
+    createTemplateGallery(NUMBEF_OF_PHOTO);
+    let libraryMovie;
+    if (type === "watch") {
+      libraryMode = "watch";
+      libraryMovie = getMovie(type);
+    }
 
-  if (type === "queue") {
-    libraryMode = "queue";
-    libraryMovie = getMovie(type);
-  }
-  if (type === "all") {
-    libraryMode = "all";
-    libraryMovie = getMovie(type);
-  }
+    if (type === "queue") {
+      libraryMode = "queue";
+      libraryMovie = getMovie(type);
+    }
+    if (type === "all") {
+      libraryMode = "all";
+      libraryMovie = getMovie(type);
+    }
 
-  totalResults = libraryMovie.length;
-  totalPages = Math.ceil(libraryMovie.length / 20);
-  libraryDataMovie = libraryMovie.filter((e, i) => {
-    const startData = currentPage * 20 - 20;
-    const endData = currentPage * 20;
-    const data = i >= startData && i < endData;
-    return data;
-  });
+    totalResults = libraryMovie.length;
+    totalPages = Math.ceil(libraryMovie.length / 20);
+    libraryDataMovie = libraryMovie.filter((e, i) => {
+      const startData = currentPage * 20 - 20;
+      const endData = currentPage * 20;
+      const data = i >= startData && i < endData;
+      return data;
+    });
 
-  results = libraryDataMovie.length;
+    results = libraryDataMovie.length;
 
-  if (totalResults === 0) {
-    galleryGrid.innerHTML = `<img class="empty" alt="empty "  src="${empty}"> `;
-    PAGINATION_CONTAINER.style.display = "none";
-    return;
-  } else {
-    PAGINATION_CONTAINER.style.display = "flex";
-  }
-  if (results < 20) {
-    const removeRemainingSkeleton = [...GALLERY.children].forEach(
-      (remainingElement, remainingIndex) => {
-        if (remainingIndex >= results) remainingElement.remove();
-      }
-    );
-  }
+    if (totalResults === 0) {
+      galleryGrid.innerHTML = `<img class="empty" alt="empty "  src="${empty}"> `;
+      PAGINATION_CONTAINER.style.display = "none";
+      galleryGrid.removeEventListener("click", openmodal);
+      return;
+    } else {
+      PAGINATION_CONTAINER.style.display = "flex";
+    }
+    if (results < 20) {
+      const removeRemainingSkeleton = [...GALLERY.children].forEach(
+        (remainingElement, remainingIndex) => {
+          if (remainingIndex >= results) remainingElement.remove();
+        }
+      );
+    }
 
-  const getSearchMovieCategory = await fetch(
-    `
+    const getSearchMovieCategory = await fetch(
+      `
 https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`
-  );
-  const responseSearchCategory = await getSearchMovieCategory.json();
-  const dataSearchCategory = responseSearchCategory.genres;
+    );
+    const responseSearchCategory = await getSearchMovieCategory.json();
+    const dataSearchCategory = responseSearchCategory.genres;
 
-  displayMovie(libraryDataMovie, dataSearchCategory, "library");
+    displayMovie(libraryDataMovie, dataSearchCategory, "library");
 
-  createPaginationList(totalPages);
-  if (count === "first") {
-    PAGINATION_GRID.style.transform = `translateX(0px)`;
+    createPaginationList(totalPages);
+    if (count === "first") {
+      PAGINATION_GRID.style.transform = `translateX(0px)`;
+    }
+  } catch (error) {
+    console.error(error.message, error.code);
   }
-  // } catch (error) {
-  //   console.error(error.message, error.code);
-  // }
 };
 
 const getPopularMovie = async () => {
@@ -323,6 +324,7 @@ const getSearchMovie = async (event, count = "first") => {
     if (totalResults === 0) {
       galleryGrid.innerHTML = `<img class="empty" alt="empty "  src="${nothing}"> `;
       PAGINATION_CONTAINER.style.display = "none";
+      galleryGrid.removeEventListener("click", openmodal);
       return;
     } else {
       PAGINATION_CONTAINER.style.display = "flex";
@@ -349,13 +351,6 @@ https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`
     createPaginationList(totalPages);
     if (count === "first") {
       PAGINATION_GRID.style.transform = `translateX(0px)`;
-    }
-
-    if (totalResults === 0) {
-      galleryGrid.innerHTML = `<img class="empty" alt="Poster of movie
-    }"  src="${empty}"> `;
-      PAGINATION_CONTAINER.innerHTML = "";
-      return;
     }
   } catch (error) {
     console.error(error.message, error.code);
