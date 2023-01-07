@@ -1,3 +1,4 @@
+import Notiflix from "notiflix";
 const getMovie = movieKey => {
   const defaultValue = [];
 
@@ -22,7 +23,13 @@ const addMovie = (movieKey, movie) => {
       return console.log("Nie dodano");
     }
     if (movies.some(element => element.id === movie.id)) {
-      return console.log("ALREADY IN STOCK");
+      if (movieKey === "watch") {
+        Notiflix.Notify.info("You alredy have this movie in watch list");
+      }
+      if (movieKey === "queue") {
+        Notiflix.Notify.info("You alredy have this movie in queues");
+      }
+      return;
     }
 
     movies.push(movie);

@@ -2,7 +2,12 @@ import nocover from "../images/nocover.png";
 import { openmodal } from "./modals";
 import { getMovie } from "./storage";
 import empty from "../images/empty_library.png";
+import emptyWatch from "../images/empty_watched.png";
+import emptyQueue from "../images/empty_queue.png";
 import nothing from "../images/nothing3.png";
+import Notiflix from "notiflix";
+import nothing2 from "../images/nothing2.png";
+import nothing2 from "../images/nothing2.png";
 
 const GALLERY = document.querySelector("ul.MainPage__Grid");
 const GALLERY_TEMPLATE = document.querySelector("template.GalleryTemplate");
@@ -171,8 +176,6 @@ const displayMovie = (Movie, Category, type = "normal") => {
           if (type === "library") {
             const movieLibraryCategory = Movie[index].genres.map(e => e.name);
 
-            console.log(movieLibraryCategory);
-
             if (movieLibraryCategory.length >= 4) {
               movieCategory =
                 movieLibraryCategory.slice(0, 3).join(", ") + " " + "...";
@@ -239,9 +242,17 @@ const getLibraryMovie = async (type, count = "first") => {
     results = libraryDataMovie.length;
 
     if (totalResults === 0) {
-      galleryGrid.innerHTML = `<img class="empty" alt="empty "  src="${empty}"> `;
       PAGINATION_CONTAINER.style.display = "none";
       galleryGrid.removeEventListener("click", openmodal);
+      if (type === "all") {
+        galleryGrid.innerHTML = `<img class="empty" alt="empty "  src="${empty}"> `;
+      }
+      if (type === "watch") {
+        galleryGrid.innerHTML = `<img class="empty" alt="empty "  src="${emptyWatch}"> `;
+      }
+      if (type === "queue") {
+        galleryGrid.innerHTML = `<img class="empty" alt="empty "  src="${emptyQueue}"> `;
+      }
       return;
     } else {
       PAGINATION_CONTAINER.style.display = "flex";
@@ -307,7 +318,8 @@ const getSearchMovie = async (event, count = "first") => {
     event.currentTarget.blur();
     const params = new URLSearchParams(searchMovieOption);
     if (searchMovieOption.query === "") {
-      return console.log("BRAK DANYCH W INPUCIE");
+      galleryGrid.innerHTML = `<img class="empty" alt="empty "  src="${nothing2}"> `;
+      return Notiflix.Notify.warning("BRAK DANYCH W INPUCIE");
     }
 
     createTemplateGallery(NUMBEF_OF_PHOTO);
