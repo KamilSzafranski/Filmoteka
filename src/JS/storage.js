@@ -21,9 +21,9 @@ const addMovie = (movieKey, movie) => {
     if (movie.success === false) {
       return console.log("Nie dodano");
     }
-    // if (movies.some(element => element.id === movie.id)) {
-    //   return console.log("ALREADY IN STOCK");
-    // }
+    if (movies.some(element => element.id === movie.id)) {
+      return console.log("ALREADY IN STOCK");
+    }
 
     movies.push(movie);
 
