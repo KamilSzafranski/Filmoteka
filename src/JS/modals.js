@@ -30,27 +30,20 @@ const modalListner = event => {
     addMovie("all", movie[0]);
     return addMovie(type, movie[0]);
   }
-  if (type === "close" || event.code === "Escape") {
+  if (type === "close") {
     modal.classList.add("is-hidden");
     modal.removeEventListener("click", modalListner);
     window.removeEventListener("keydown", closeModal);
     galleryGrid.addEventListener("click", openmodal);
   }
-  if (event.target === modal) {
-    modal.classList.add("is-hidden");
-    modal.removeEventListener("click", modalListner);
-    galleryGrid.addEventListener("click", openmodal);
-  }
 };
 
 const closeModal = event => {
-  event.preventDefault();
   const {
     dataset: { type },
   } = event.target;
 
-  console.log("e");
-  if ((event.code = "Escape")) {
+  if (event.key === "Escape") {
     modal.classList.add("is-hidden");
     modal.removeEventListener("click", modalListner);
     window.removeEventListener("keydown", modalListner);
@@ -58,41 +51,48 @@ const closeModal = event => {
   }
 };
 const openmodal = async event => {
-  event.preventDefault();
-  const {
-    nodeName,
-    dataset: { id },
-  } = event.target;
-  const modal = document.querySelector(".modal-backdrop");
-  if (nodeName !== "IMG") return;
+  try {
+    event.preventDefault();
+    const {
+      nodeName,
+      dataset: { id },
+    } = event.target;
+    const modal = document.querySelector(".modal-backdrop");
+    if (nodeName !== "IMG") return;
 
-  modal.classList.remove("is-hidden");
-  galleryGrid.removeEventListener("click", openmodal);
+    modal.classList.remove("is-hidden");
+    galleryGrid.removeEventListener("click", openmodal);
 
-  const response = await fetch(
-    `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`
-  );
+    modal.addEventListener("click", modalListner);
+    window.addEventListener("keydown", closeModal);
 
-  const data = await response.json();
+    const response = await fetch(
+      `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`
+    );
 
-  modalTitle.textContent = data.title;
-  modalAbout.textContent = data.overview;
-  modalImage.src = event.target.src;
-  modalVote.textContent = data.vote_average;
-  modalVotes.textContent = data.vote_count;
-  modalPopularity.textContent = data.popularity;
-  modalOriginalTitle.textContent = data.original_title;
+    const data = await response.json();
 
-  const movieGenres = data.genres.map(function (item) {
-    return item["name"];
-  });
-  modalGenre.textContent = movieGenres.join(", ");
+    modalTitle.textContent = data.title;
+    modalAbout.textContent = data.overview;
+    modalImage.src = event.target.src;
+    modalVote.textContent = data.vote_average;
+    modalVotes.textContent = data.vote_count;
+    modalPopularity.textContent = data.popularity;
+    modalOriginalTitle.textContent = data.original_title;
 
-  movie = [];
-  movie.push(data);
+    const movieGenres = data.genres.map(function (item) {
+      return item["name"];
+    });
+    modalGenre.textContent = movieGenres.join(", ");
 
-  modal.addEventListener("click", modalListner);
-  window.addEventListener("keydown", closeModal);
+    movie = [];
+    movie.push(data);
+
+    modal.addEventListener("click", modalListner);
+    window.addEventListener("keydown", closeModal);
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 export { openmodal };
