@@ -1,11 +1,15 @@
 import { getLibraryMovie } from "./main";
-
+import { checkUserData } from "./firebase";
 const headerSearch = document.querySelector(".js-box");
 const library = document.querySelector("#library");
 const home = document.querySelector("#home");
 const header = document.querySelector(".header");
 const searchLabel = document.querySelector(".header__label");
 import Notiflix from "notiflix";
+const KEY = "UserData";
+function getUser(KEY) {
+  return JSON.parse(localStorage.getItem(KEY));
+}
 
 const libraryCreation = e => {
   e.preventDefault();
@@ -24,7 +28,8 @@ const libraryCreation = e => {
       position: "center-top",
     },
   });
-  Notiflix.Notify.info("Log in for more features!");
+  const dataUser = getUser(KEY);
+  if (!dataUser) Notiflix.Notify.info("Log in for more features!");
   getLibraryMovie("all");
 };
 

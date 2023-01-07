@@ -1,6 +1,6 @@
 import { galleryGrid, API_KEY } from "./main";
 import { addMovie } from "./storage";
-
+import Notiflix from "notiflix";
 const modal = document.querySelector(".modal-backdrop");
 
 const modalImage = document.querySelector(".film-modal-poster-img");
@@ -91,6 +91,7 @@ const openmodal = async event => {
     modal.addEventListener("click", modalListner);
     window.addEventListener("keydown", closeModal);
   } catch (error) {
+    Notiflix.Notify.warning("Sorry, Something get wrong. Plese try again");
     console.error(error);
   }
 };
