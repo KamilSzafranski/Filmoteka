@@ -1,7 +1,9 @@
-.library__empty {
-  display: flex;
+.empty {
+  margin: 0 auto;
   align-items: center;
   justify-content: center;
-  padding: 100px;
+  padding-top: 50px;
+  padding-bottom: 10px;
+  width: 50%;
   //display:none; -> fixuje bug na headerze//trzeba dodać skalowanie z szerokością kontenera
 }
