@@ -1,3 +1,5 @@
+"use strict";
+
 import "./JS/cookies";
 import { scrollFunction } from "./JS/topBtn";
 import "./JS/darkmode";
