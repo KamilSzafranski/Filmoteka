@@ -1,6 +1,8 @@
-import image from "../images/nocover.png";
+import nocover from "../images/nocover.png";
 import { openmodal } from "./modals";
 import { getMovie } from "./storage";
+import empty from "../images/empty_library.png";
+import nothing from "../images/nothing3.png";
 
 const GALLERY = document.querySelector("ul.MainPage__Grid");
 const GALLERY_TEMPLATE = document.querySelector("template.GalleryTemplate");
@@ -19,12 +21,13 @@ let searchMovieOption = {
   api_key: API_KEY,
   language: "en-US",
 };
-
+let mode;
 let totalResults;
 let totalPages;
 let currentPage = 1;
 let results;
 let currentLibraryPage = 1;
+let libraryMode;
 
 let firstItem = document.querySelector("div[data-add='first']");
 let lastItem = document.querySelector("div[data-add='last']");
@@ -68,7 +71,7 @@ const createPaginationList = numberOfPage => {
     PAGINATION_CONTAINER.lastElementChild.style.transform = `translateX(0px)`;
   }
 
-  if (totalPages - currentPage <= 2) {
+  if (totalPages - currentPage <= 3) {
     lastItem.style.visibility = "hidden";
     lastItem.previousElementSibling.style.visibility = "hidden";
     lastItem.style.opacity = "0";
@@ -76,7 +79,6 @@ const createPaginationList = numberOfPage => {
     PAGINATION_CONTAINER.lastElementChild.style.transform = `translateX(-60px)`;
   }
   if (currentPage > 3) {
-    console.log("e");
     PAGINATION_CONTAINER.firstElementChild.style.transform = `translateX(0px)`;
     firstItem.style.visibility = "visible";
     firstItem.nextElementSibling.style.visibility = "visible";
@@ -95,7 +97,6 @@ const createPaginationList = numberOfPage => {
   } else {
     PAGINATION_CONTAINER.firstElementChild.style.visibility = "visible";
     PAGINATION_CONTAINER.firstElementChild.style.opacity = "1";
-    console.log(PAGINATION_CONTAINER.firstElementChild);
   }
   if (currentPage === totalPages) {
     PAGINATION_CONTAINER.lastElementChild.style.visibility = "hidden";
@@ -107,6 +108,9 @@ const createPaginationList = numberOfPage => {
 };
 const displayMovie = (Movie, Category, type = "normal") => {
   [...galleryGrid.children].forEach((element, index) => {
+    if (Movie[index].status_code) {
+      return;
+    }
     let {
       title,
       name,
@@ -120,7 +124,7 @@ const displayMovie = (Movie, Category, type = "normal") => {
 
     let poster =
       poster_path === null
-        ? image
+        ? nocover
         : `https://image.tmdb.org/t/p/w500${poster_path}`;
 
     const markup = `<img class="MainPage__Img skeleton" alt="Poster of movie:${
@@ -165,14 +169,18 @@ const displayMovie = (Movie, Category, type = "normal") => {
             movieCategory === "" ? "No type in database" : movieCategory
           }`;
           if (type === "library") {
-            console.log(Movie[index]);
-            const movieLibraryCategory = Movie[index].genres
-              .map(e => e.name)
-              .join(", ");
+            const movieLibraryCategory = Movie[index].genres.map(e => e.name);
+
+            console.log(movieLibraryCategory);
+
+            if (movieLibraryCategory.length >= 4) {
+              movieCategory =
+                movieLibraryCategory.slice(0, 3).join(", ") + " " + "...";
+            } else {
+              movieCategory = movieLibraryCategory.join(", ");
+            }
             listElement.textContent = `${
-              movieLibraryCategory === ""
-                ? "No type in database"
-                : movieLibraryCategory
+              movieCategory === "" ? "No type in database" : movieCategory
             }`;
           }
         }
@@ -195,53 +203,72 @@ const displayMovie = (Movie, Category, type = "normal") => {
 };
 
 const getLibraryMovie = async (type, count = "first") => {
-  try {
-    if (count === "first") {
-      currentPage = 1;
-    }
-
-    GALLERY.innerHTML = "";
-
-    createTemplateGallery(NUMBEF_OF_PHOTO);
-    let libraryMovie;
-    if (type === "watch") {
-      libraryMovie = getMovie(type);
-    }
-
-    if (type === "queue") {
-      libraryMovie = getMovie(type);
-    }
-
-    totalResults = libraryMovie.length;
-    totalPages = Math.ceil(libraryMovie.length / 20);
-
-    results = libraryMovie.length;
-
-    console.log(results);
-    if (results < 20) {
-      const removeRemainingSkeleton = [...GALLERY.children].forEach(
-        (remainingElement, remainingIndex) => {
-          if (remainingIndex >= results) remainingElement.remove();
-        }
-      );
-    }
-
-    const getSearchMovieCategory = await fetch(
-      `
-https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`
-    );
-    const responseSearchCategory = await getSearchMovieCategory.json();
-    const dataSearchCategory = responseSearchCategory.genres;
-
-    displayMovie(libraryMovie, dataSearchCategory, "library");
-
-    createPaginationList(totalPages);
-    if (count === "first") {
-      PAGINATION_GRID.style.transform = `translateX(0px)`;
-    }
-  } catch (error) {
-    console.error(error.message, error.code);
+  // try {
+  if (count === "first") {
+    currentPage = 1;
   }
+  mode = "library";
+
+  GALLERY.innerHTML = "";
+
+  createTemplateGallery(NUMBEF_OF_PHOTO);
+  let libraryMovie;
+  if (type === "watch") {
+    libraryMode = "watch";
+    libraryMovie = getMovie(type);
+  }
+
+  if (type === "queue") {
+    libraryMode = "queue";
+    libraryMovie = getMovie(type);
+  }
+  if (type === "all") {
+    libraryMode = "all";
+    libraryMovie = getMovie(type);
+  }
+
+  totalResults = libraryMovie.length;
+  totalPages = Math.ceil(libraryMovie.length / 20);
+  libraryDataMovie = libraryMovie.filter((e, i) => {
+    const startData = currentPage * 20 - 20;
+    const endData = currentPage * 20;
+    const data = i >= startData && i < endData;
+    return data;
+  });
+
+  results = libraryDataMovie.length;
+
+  if (totalResults === 0) {
+    galleryGrid.innerHTML = `<img class="empty" alt="empty "  src="${empty}"> `;
+    PAGINATION_GRID.style.display = "none";
+    return;
+  } else {
+    PAGINATION_GRID.style.display = "flex";
+  }
+  if (results < 20) {
+    const removeRemainingSkeleton = [...GALLERY.children].forEach(
+      (remainingElement, remainingIndex) => {
+        if (remainingIndex >= results) remainingElement.remove();
+      }
+    );
+  }
+
+  const getSearchMovieCategory = await fetch(
+    `
+https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`
+  );
+  const responseSearchCategory = await getSearchMovieCategory.json();
+  const dataSearchCategory = responseSearchCategory.genres;
+
+  displayMovie(libraryDataMovie, dataSearchCategory, "library");
+
+  createPaginationList(totalPages);
+  if (count === "first") {
+    PAGINATION_GRID.style.transform = `translateX(0px)`;
+  }
+  // } catch (error) {
+  //   console.error(error.message, error.code);
+  // }
 };
 
 const getPopularMovie = async () => {
@@ -271,6 +298,7 @@ const getSearchMovie = async (event, count = "first") => {
     if (count === "first") {
       currentPage = 1;
     }
+    mode = "search";
     event.preventDefault();
     GALLERY.innerHTML = "";
     searchMovieOption.query = SEARCH_INPUT.value.trim();
@@ -291,6 +319,14 @@ const getSearchMovie = async (event, count = "first") => {
     totalPages = responseSearchMovie.total_pages;
     totalResults = responseSearchMovie.total_results;
     results = responseSearchMovie.results.length;
+
+    if (totalResults === 0) {
+      galleryGrid.innerHTML = `<img class="empty" alt="empty "  src="${nothing}"> `;
+      PAGINATION_GRID.style.display = "none";
+      return;
+    } else {
+      PAGINATION_GRID.style.display = "flex";
+    }
 
     if (results < 20) {
       const removeRemainingSkeleton = [...GALLERY.children].forEach(
@@ -314,6 +350,13 @@ https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`
     if (count === "first") {
       PAGINATION_GRID.style.transform = `translateX(0px)`;
     }
+
+    if (totalResults === 0) {
+      galleryGrid.innerHTML = `<img class="empty" alt="Poster of movie
+    }"  src="${empty}"> `;
+      PAGINATION_CONTAINER.innerHTML = "";
+      return;
+    }
   } catch (error) {
     console.error(error.message, error.code);
   }
@@ -332,11 +375,13 @@ const pagination = event => {
 
   if (page === "next") {
     currentPage++;
-    getSearchMovie(event, "second");
+    if (mode === "search") getSearchMovie(event, "second");
+    if (mode === "library") getLibraryMovie(libraryMode, "second");
   }
   if (page == "previous") {
     currentPage--;
-    getSearchMovie(event, "second");
+    if (mode === "search") getSearchMovie(event, "second");
+    if (mode === "library") getLibraryMovie(libraryMode, "second");
   }
 
   if (page === "next" && currentPage > 3) {
@@ -371,7 +416,6 @@ const pagination = event => {
     if (Number(textContent) <= 3 && currentPage >= 3) {
       gridTranslateX += (3 - Number(textContent)) * 30;
       move(gridTranslateX);
-      console.log("e");
     }
 
     if (Number(textContent) <= 3) {
@@ -383,27 +427,25 @@ const pagination = event => {
       move(gridTranslateX);
     }
 
-    getSearchMovie(event, "second");
+    if (mode === "search") getSearchMovie(event, "second");
+    if (mode === "library") getLibraryMovie(libraryMode, "second");
   }
 
   if (event.target === firstItem) {
     gridTranslateX = 0;
     move(gridTranslateX);
     currentPage = 1;
-    getSearchMovie(event, "second");
+    if (mode === "search") getSearchMovie(event, "second");
+    if (mode === "library") getLibraryMovie(libraryMode, "second");
   }
 
   if (event.target === lastItem) {
     gridTranslateX = -(totalPages - 5) * 30;
     move(gridTranslateX);
     currentPage = totalPages;
-    getSearchMovie(event, "second");
+    if (mode === "search") getSearchMovie(event, "second");
+    if (mode === "library") getLibraryMovie(libraryMode, "second");
   }
-
-  // window.scrollTo({
-  //   top: 0,
-  //   behavior: "smooth",
-  // });
 };
 
 export {

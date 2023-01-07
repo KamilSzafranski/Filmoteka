@@ -202,3 +202,39 @@
     }
   }
 }
+
+.is-hidden {
+  visibility: hidden;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.temporaryModa {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  gap: 25px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(115, 115, 115, 0.5);
+  &__btn {
+    background-color: black;
+    color: white;
+    width: 100px;
+    opacity: 1;
+    cursor: pointer;
+  }
+}
+
+.empty {
+  display: block;
+  width: 400px;
+  height: 400px;
+  margin: 0 auto;
+  border-radius: 5px;
+  object-fit: cover;
+  transition-duration: 500ms;
+}
