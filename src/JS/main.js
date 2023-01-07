@@ -319,7 +319,16 @@ const getSearchMovie = async (event, count = "first") => {
     const params = new URLSearchParams(searchMovieOption);
     if (searchMovieOption.query === "") {
       galleryGrid.innerHTML = `<img class="empty" alt="empty "  src="${nothing2}"> `;
-      return Notiflix.Notify.warning("BRAK DANYCH W INPUCIE");
+      Notiflix.Notify.init({
+        clickToClose: true,
+        warning: {
+          background: "#fc036b",
+          position: "center-top",
+        },
+      });
+      return Notiflix.Notify.warning(
+        "Search result not successful. Enter the correct movie name and "
+      );
     }
 
     createTemplateGallery(NUMBEF_OF_PHOTO);
@@ -337,6 +346,16 @@ const getSearchMovie = async (event, count = "first") => {
       galleryGrid.innerHTML = `<img class="empty" alt="empty "  src="${nothing}"> `;
       PAGINATION_CONTAINER.style.display = "none";
       galleryGrid.removeEventListener("click", openmodal);
+      Notiflix.Notify.init({
+        clickToClose: true,
+        warning: {
+          background: "#fc036b",
+          position: "center-top",
+        },
+      });
+      Notiflix.Notify.warning(
+        "Search result not successful. Enter the correct movie name and "
+      );
       return;
     } else {
       PAGINATION_CONTAINER.style.display = "flex";
