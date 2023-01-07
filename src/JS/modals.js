@@ -34,7 +34,6 @@ const modalListner = event => {
     modal.classList.add("is-hidden");
     modal.removeEventListener("click", modalListner);
     window.removeEventListener("keydown", closeModal);
-
     galleryGrid.addEventListener("click", openmodal);
   }
 };
