@@ -24,3 +24,4 @@ PAGINATION_CONTAINER.addEventListener("click", pagination);
 import { toggleModal } from "./JS/team-modal";
 
 import "./JS/firebase";
+import "./JS/modals";
