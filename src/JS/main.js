@@ -240,10 +240,10 @@ const getLibraryMovie = async (type, count = "first") => {
 
   if (totalResults === 0) {
     galleryGrid.innerHTML = `<img class="empty" alt="empty "  src="${empty}"> `;
-    PAGINATION_GRID.style.display = "none";
+    PAGINATION_CONTAINER.style.display = "none";
     return;
   } else {
-    PAGINATION_GRID.style.display = "flex";
+    PAGINATION_CONTAINER.style.display = "flex";
   }
   if (results < 20) {
     const removeRemainingSkeleton = [...GALLERY.children].forEach(
@@ -322,10 +322,10 @@ const getSearchMovie = async (event, count = "first") => {
 
     if (totalResults === 0) {
       galleryGrid.innerHTML = `<img class="empty" alt="empty "  src="${nothing}"> `;
-      PAGINATION_GRID.style.display = "none";
+      PAGINATION_CONTAINER.style.display = "none";
       return;
     } else {
-      PAGINATION_GRID.style.display = "flex";
+      PAGINATION_CONTAINER.style.display = "flex";
     }
 
     if (results < 20) {
