@@ -39,7 +39,7 @@ const modalListner = event => {
   }
 };
 
-closeModal = event => {
+const closeModal = event => {
   event.preventDefault();
   const {
     dataset: { type },
