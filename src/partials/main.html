@@ -42,56 +42,90 @@
     </figure>
   </li>
 </template>
+
 <button class="top-button">
   <img src="./images/top-icon.svg" alt="Go to top" />
 </button>
 
+<div class="clear-library">
+  <button class="top-button clear-library__btn">Clear library</button>
+</div>
 
-
-    <div class="modal-backdrop is-hidden">
-      <div class="film-modal">
-      <button class="film-modal-close-button"> 
-        <svg class="film-modal-close-icon" data-type="close" width='30' height='30' viewBox='0 0 30 30'>
-          <path class='film-modal-close-icon' d='M8 8L22 22' stroke='black' stroke-width='2'></path>
-          <path class='film-modal-close-icon' d='M8 22L22 8' stroke='black' stroke-width='2'></path>
-        </svg>
-      </button>
-      <div class='film-modal-poster-wrap'>
-        <img
-          class='film-modal-poster-img'
-          src="/src/images/temporary-img.png" alt="film"
-        />
-      </div>
-      <div class="film-modal-info-wrap">
+<div class="modal-backdrop is-hidden">
+  <div class="film-modal">
+    <button class="film-modal-close-button" data-type="close">
+      <svg
+        class="film-modal-close-icon"
+        data-type="close"
+        width="30"
+        height="30"
+        viewBox="0 0 30 30"
+      >
+        <path
+          data-type="close"
+          class="film-modal-close-icon"
+          d="M8 8L22 22"
+          stroke="black"
+          stroke-width="2"
+        ></path>
+        <path
+          data-type="close"
+          class="film-modal-close-icon"
+          d="M8 22L22 8"
+          stroke="black"
+          stroke-width="2"
+        ></path>
+      </svg>
+    </button>
+    <div class="film-modal-poster-wrap">
+      <img
+        class="film-modal-poster-img"
+        src="/src/images/temporary-img.png"
+        alt="film"
+      />
+    </div>
+    <div class="film-modal-info-wrap">
       <p class="film-modal-title">Title</p>
       <ul class="film-modal-info-list">
-        <li class="film-modal-item ">
+        <li class="film-modal-item">
           <p class="film-modal-item-title">Vote / Votes</p>
           <p class="film-modal-item-description">
-        <span class="film-modal-item-vote color">7.3</span>
-        /
-        <span class="film-modal-item-votes">back-end</span>
-      </p>
-      </li>
-      <li class="film-modal-item ">
-        <p class="film-modal-item-title">Popularity</p>
-        <p class='film-modal-item-popularity film-modal-item-description'>back-end</p>
-      </li>
-      <li class="film-modal-item ">
-        <p class="film-modal-item-title">Original Title</p>
-        <p class="film-modal-item-description film-modal-item-original-title">back-end</p>
-      </li>
-      <li class="film-modal-item ">
-        <p class="film-modal-item-title">Genre</p>
-        <p class='film-modal-item-genre film-modal-item-description'>back-end</p>
-      </li>
-    </ul>
-    <h3 class="film-modal-about">ABOUT</h3>
-    <p class="film-modal-description">description</p>
-    <div class="film-modal-btn-wrap">
-      <button class="film-modal-btn film-modal-btn-watched" data-type="watch" type="submit">add to Watched</button>
-      <button class="film-modal-btn" type="submit">add to queue</button>
-    </div>
-    </div>
+            <span class="film-modal-item-vote color">7.3</span>
+            /
+            <span class="film-modal-item-votes">back-end</span>
+          </p>
+        </li>
+        <li class="film-modal-item">
+          <p class="film-modal-item-title">Popularity</p>
+          <p class="film-modal-item-popularity film-modal-item-description">
+            back-end
+          </p>
+        </li>
+        <li class="film-modal-item">
+          <p class="film-modal-item-title">Original Title</p>
+          <p class="film-modal-item-description film-modal-item-original-title">
+            back-end
+          </p>
+        </li>
+        <li class="film-modal-item">
+          <p class="film-modal-item-title">Genre</p>
+          <p class="film-modal-item-genre film-modal-item-description">
+            back-end
+          </p>
+        </li>
+      </ul>
+      <h3 class="film-modal-about">ABOUT</h3>
+      <p class="film-modal-description">description</p>
+      <div class="film-modal-btn-wrap">
+        <button
+          class="film-modal-btn film-modal-btn-watched"
+          data-type="watch"
+          type="submit"
+        >
+          add to Watched
+        </button>
+        <button class="film-modal-btn" type="submit">add to queue</button>
+      </div>
     </div>
   </div>
+</div>
