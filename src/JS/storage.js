@@ -17,10 +17,10 @@ const getMovie = movieKey => {
 
 const addMovie = (movieKey, movie) => {
   try {
-    const movies = getMovie(movieKey);
-    console.log(movie);
     if (movie.success === false) {
-      return console.log("Nie dodano");
+      return Notiflix.Notify.error(
+        "Sorry, Somthing get wrong. Plese try again"
+      );
     }
     if (movies.some(element => element.id === movie.id)) {
       if (movieKey === "watch") {
