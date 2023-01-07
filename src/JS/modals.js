@@ -22,6 +22,8 @@ const modalListner = event => {
     dataset: { type },
   } = event.target;
 
+  console.log(event.target);
+
   if (type === "watch") {
     addMovie("all", movie[0]);
     return addMovie(type, movie[0]);
@@ -30,7 +32,7 @@ const modalListner = event => {
     addMovie("all", movie[0]);
     return addMovie(type, movie[0]);
   }
-  if (type === "close" || event.code === "Escape") {
+  if (type === "close") {
     modal.classList.add("is-hidden");
     modal.removeEventListener("click", modalListner);
     window.removeEventListener("keydown", closeModal);
@@ -40,12 +42,10 @@ const modalListner = event => {
 };
 
 const closeModal = event => {
-  event.preventDefault();
   const {
     dataset: { type },
   } = event.target;
 
-  console.log("e");
   if ((event.code = "Escape")) {
     modal.classList.add("is-hidden");
     modal.removeEventListener("click", modalListner);
