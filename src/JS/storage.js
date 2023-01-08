@@ -18,10 +18,9 @@ const getMovie = movieKey => {
 const addMovie = (movieKey, movie) => {
   try {
     const movies = getMovie(movieKey);
-
     if (movie.success === false) {
       return Notiflix.Notify.error(
-        "Sorry, Somthing get wrong. Plese try again"
+        "Sorry, Something get wrong. Please try again"
       );
     }
     if (movies.some(element => element.id === movie.id)) {

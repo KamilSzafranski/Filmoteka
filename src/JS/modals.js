@@ -1,7 +1,6 @@
 import { galleryGrid, API_KEY } from "./main";
 import { addMovie } from "./storage";
 import Notiflix from "notiflix";
-
 const modal = document.querySelector(".modal-backdrop");
 
 const modalImage = document.querySelector(".film-modal-poster-img");
@@ -35,6 +34,11 @@ const modalListner = event => {
     modal.classList.add("is-hidden");
     modal.removeEventListener("click", modalListner);
     window.removeEventListener("keydown", closeModal);
+    galleryGrid.addEventListener("click", openmodal);
+  }
+  if (event.target === modal) {
+    modal.classList.add("is-hidden");
+    modal.removeEventListener("click", modalListner);
     galleryGrid.addEventListener("click", openmodal);
   }
 };
@@ -92,7 +96,7 @@ const openmodal = async event => {
     modal.addEventListener("click", modalListner);
     window.addEventListener("keydown", closeModal);
   } catch (error) {
-    Notiflix.Notify.warning("Sorry, Somthing get wrong. Plese try again");
+    Notiflix.Notify.warning("Sorry, Something get wrong. Please try again");
     console.error(error);
   }
 };
