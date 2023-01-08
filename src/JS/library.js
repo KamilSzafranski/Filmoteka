@@ -1,4 +1,4 @@
-import { getLibraryMovie } from "./main";
+import { getLibraryMovie, libraryMode } from "./main";
 import { checkUserData } from "./firebase";
 const headerSearch = document.querySelector(".js-box");
 const library = document.querySelector("#library");
