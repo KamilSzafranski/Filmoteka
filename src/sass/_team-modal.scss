@@ -27,12 +27,13 @@
 }
 
 .team-modal {
+    height: 80vh;
     color: white;
     position: absolute;
     display: flex;
     flex-direction: column;
     align-items: center;
-    top: 115%;
+    top: 50%;
     left: 50%;
     margin-bottom: 40px;
     padding: 40px;
@@ -46,7 +47,7 @@
     -webkit-backdrop-filter: blur( 11px );
     border-radius: 10px;
     border: 1px solid rgba( 255, 255, 255, 0.18 );
-
+    overflow-y: auto;
 
     &__close-btn {
         position: absolute;
@@ -86,7 +87,7 @@
     align-items: center;
     justify-content: center;
     width: 300px;
-    transition: border 250ms $animation-function; 
+    transition: border 250ms $animation-function;
     
     &:hover {
         transform: scale(1.02);
@@ -134,8 +135,8 @@
         &--icon {
             transition: fill 250ms $animation-function; 
             
-            &:hover {
-                cursor: pointer;
+           &:hover {
+               cursor: pointer;
                 fill: $accent-color;
             }
 
@@ -147,8 +148,8 @@
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
     .team-modal {
         min-width: 748px;
-        top: 70%;
     }
+    
     .team__wrapper {
         display: flex;
         flex-direction: row;
@@ -162,7 +163,6 @@
 @media only screen and (min-width: 1024px) {
     .team-modal {
         min-width: 1004px;
-        top: 50%;
     }
 
     .team__wrapper {

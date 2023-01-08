@@ -10,7 +10,15 @@ CLOSE_MODAL_TEAM.addEventListener("click", toggleModal);
   
 export function toggleModal() {
     MODAL_TEAM.classList.toggle("is-hidden");
+
+    if (!MODAL_TEAM.classList.contains("is-hidden")) {
+        BODY.style.overflow = "hidden"
+    } else {
+        BODY.style.overflow = "auto"
+    }
+
 }
+
 
 window.onclick = function(event) {
     if (event.target == MODAL_TEAM) {
