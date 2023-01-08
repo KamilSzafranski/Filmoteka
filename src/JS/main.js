@@ -232,7 +232,7 @@ const getLibraryMovie = async (type, count = "first") => {
 
     totalResults = libraryMovie.length;
     totalPages = Math.ceil(libraryMovie.length / 20);
-    libraryDataMovie = libraryMovie.filter((e, i) => {
+    const libraryDataMovie = libraryMovie.filter((e, i) => {
       const startData = currentPage * 20 - 20;
       const endData = currentPage * 20;
       const data = i >= startData && i < endData;
