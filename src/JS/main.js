@@ -341,6 +341,23 @@ const getSearchMovie = async (event, count = "first") => {
     } else {
       PAGINATION_CONTAINER.style.display = "flex";
     }
+    Notiflix.Notify.init({
+      position: "center-top",
+      clickToClose: true,
+      info: {
+        background: "#ff6b08",
+        position: "center-center",
+      },
+    });
+    if (results > 1) {
+      Notiflix.Notify.info(
+        "We found " + results + " movies matching your criteria!"
+      );
+    } else {
+      Notiflix.Notify.info(
+        "We found " + results + " movie matching your criteria!"
+      );
+    }
 
     if (results < 20) {
       const removeRemainingSkeleton = [...GALLERY.children].forEach(
