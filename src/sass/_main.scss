@@ -136,7 +136,6 @@
       &:hover,
       focus {
         background-color: black;
-        transform: scale(1.05);
         color: white;
       }
     }
@@ -207,4 +206,22 @@
   visibility: hidden;
   pointer-events: none;
   opacity: 0;
+}
+
+.hide {
+  visibility: hidden;
+  pointer-events: none;
+  opacity: 0;
+  display: none;
+}
+
+.Modal-ImgWrapper {
+  left: 50%;
+  top: 50%;
+  width: 200px;
+  height: 200px;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

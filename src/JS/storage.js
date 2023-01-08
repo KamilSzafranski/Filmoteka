@@ -25,10 +25,10 @@ const addMovie = (movieKey, movie) => {
     }
     if (movies.some(element => element.id === movie.id)) {
       if (movieKey === "watch") {
-        Notiflix.Notify.info("You alredy have this movie in watch list");
+        Notiflix.Notify.info("This movie is already on your watched list");
       }
       if (movieKey === "queue") {
-        Notiflix.Notify.info("You alredy have this movie in queues");
+        Notiflix.Notify.info("This movie is already in your queue");
       }
       return;
     }
