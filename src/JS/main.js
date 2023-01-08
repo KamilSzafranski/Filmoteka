@@ -2,7 +2,12 @@ import nocover from "../images/nocover.png";
 import { openmodal } from "./modals";
 import { getMovie } from "./storage";
 import empty from "../images/empty_library.png";
+import emptyWatch from "../images/empty_watched.png";
+import emptyQueue from "../images/empty_queue.png";
 import nothing from "../images/nothing3.png";
+import Notiflix from "notiflix";
+import nothing2 from "../images/nothing2.png";
+import nothing2 from "../images/nothing2.png";
 
 const GALLERY = document.querySelector("ul.MainPage__Grid");
 const GALLERY_TEMPLATE = document.querySelector("template.GalleryTemplate");
@@ -171,8 +176,6 @@ const displayMovie = (Movie, Category, type = "normal") => {
           if (type === "library") {
             const movieLibraryCategory = Movie[index].genres.map(e => e.name);
 
-            console.log(movieLibraryCategory);
-
             if (movieLibraryCategory.length >= 4) {
               movieCategory =
                 movieLibraryCategory.slice(0, 3).join(", ") + " " + "...";
@@ -239,9 +242,17 @@ const getLibraryMovie = async (type, count = "first") => {
     results = libraryDataMovie.length;
 
     if (totalResults === 0) {
-      galleryGrid.innerHTML = `<img class="empty" alt="empty "  src="${empty}"> `;
       PAGINATION_CONTAINER.style.display = "none";
       galleryGrid.removeEventListener("click", openmodal);
+      if (type === "all") {
+        galleryGrid.innerHTML = `<img class="empty" alt="empty "  src="${empty}"> `;
+      }
+      if (type === "watch") {
+        galleryGrid.innerHTML = `<img class="empty" alt="empty "  src="${emptyWatch}"> `;
+      }
+      if (type === "queue") {
+        galleryGrid.innerHTML = `<img class="empty" alt="empty "  src="${emptyQueue}"> `;
+      }
       return;
     } else {
       PAGINATION_CONTAINER.style.display = "flex";
@@ -258,6 +269,9 @@ const getLibraryMovie = async (type, count = "first") => {
       `
 https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`
     );
+
+    if (!getSearchMovieCategory.ok)
+      throw new Error(getSearchMovieCategory.status);
     const responseSearchCategory = await getSearchMovieCategory.json();
     const dataSearchCategory = responseSearchCategory.genres;
 
@@ -278,12 +292,16 @@ const getPopularMovie = async () => {
     const getPopularMovie = await fetch(
       `https://api.themoviedb.org/3/trending/all/week?api_key=${API_KEY}`
     );
+    if (!getPopularMovie.ok) throw new Error(getPopularMovie.status);
     const responsePopularMovie = await getPopularMovie.json();
     const dataPopularMovie = responsePopularMovie.results;
 
     const getPopularMovieCategory = await fetch(
       `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`
     );
+    if (!getPopularMovieCategory.ok) {
+      throw new Error(getPopularMovieCategory.status);
+    }
     const responsePopularCategory = await getPopularMovieCategory.json();
     const dataPopularCategory = responsePopularCategory.genres;
 
@@ -298,6 +316,11 @@ const getSearchMovie = async (event, count = "first") => {
   try {
     if (count === "first") {
       currentPage = 1;
+      if (totalResults >= 1) {
+        Notiflix.Notify.success(
+          `We found ${totalResults} movies matching your search!`
+        );
+      }
     }
     mode = "search";
     event.preventDefault();
@@ -307,7 +330,11 @@ const getSearchMovie = async (event, count = "first") => {
     event.currentTarget.blur();
     const params = new URLSearchParams(searchMovieOption);
     if (searchMovieOption.query === "") {
-      return console.log("BRAK DANYCH W INPUCIE");
+      galleryGrid.innerHTML = `<img class="empty" alt="empty "  src="${nothing2}"> `;
+
+      return Notiflix.Notify.warning(
+        "Search result not successful. Enter the correct movie name and "
+      );
     }
 
     createTemplateGallery(NUMBEF_OF_PHOTO);
@@ -315,6 +342,7 @@ const getSearchMovie = async (event, count = "first") => {
     const getSearchMovie = await fetch(
       `https://api.themoviedb.org/3/search/movie?${params}`
     );
+    if (!getSearchMovie.ok) throw new Error(getSearchMovie.status);
     const responseSearchMovie = await getSearchMovie.json();
 
     totalPages = responseSearchMovie.total_pages;
@@ -325,6 +353,9 @@ const getSearchMovie = async (event, count = "first") => {
       galleryGrid.innerHTML = `<img class="empty" alt="empty "  src="${nothing}"> `;
       PAGINATION_CONTAINER.style.display = "none";
       galleryGrid.removeEventListener("click", openmodal);
+      Notiflix.Notify.warning(
+        "Search result not successful. Enter the correct movie name and "
+      );
       return;
     } else {
       PAGINATION_CONTAINER.style.display = "flex";
@@ -343,6 +374,9 @@ const getSearchMovie = async (event, count = "first") => {
       `
 https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`
     );
+    if (!getSearchMovieCategory.ok) {
+      throw new Error(getSearchMovieCategory.status);
+    }
     const responseSearchCategory = await getSearchMovieCategory.json();
     const dataSearchCategory = responseSearchCategory.genres;
 

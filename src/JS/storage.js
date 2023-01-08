@@ -1,3 +1,4 @@
+import Notiflix from "notiflix";
 const getMovie = movieKey => {
   const defaultValue = [];
 
@@ -17,12 +18,19 @@ const getMovie = movieKey => {
 const addMovie = (movieKey, movie) => {
   try {
     const movies = getMovie(movieKey);
-    console.log(movie);
     if (movie.success === false) {
-      return console.log("Nie dodano");
+      return Notiflix.Notify.error(
+        "Sorry, Something get wrong. Please try again"
+      );
     }
     if (movies.some(element => element.id === movie.id)) {
-      return console.log("ALREADY IN STOCK");
+      if (movieKey === "watch") {
+        Notiflix.Notify.info("This movie is already on your watched list");
+      }
+      if (movieKey === "queue") {
+        Notiflix.Notify.info("This movie is already in your queue");
+      }
+      return;
     }
 
     movies.push(movie);
@@ -30,6 +38,9 @@ const addMovie = (movieKey, movie) => {
     localStorage.setItem(movieKey, JSON.stringify(movies));
   } catch (error) {
     console.error(error);
+    if (movieKey !== "all") {
+      Notiflix.Notify.warning("Sorry, Somthing get wrong. Plese try again");
+    }
   }
 };
 const removeMovie = (movieKey, movie) => {

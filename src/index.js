@@ -1,5 +1,5 @@
 "use strict";
-
+import Notiflix from "notiflix";
 import "./JS/cookies";
 import { scrollFunction } from "./JS/topBtn";
 import "./JS/darkmode";
@@ -13,6 +13,20 @@ import {
 } from "./JS/main";
 import { renderLoader } from "./JS/loader";
 import { MOVIE_KEY, getMovie, addMovie, removeMovie } from "./JS/storage";
+Notiflix.Notify.init({
+  clickToClose: true,
+  position: "center-top",
+  info: {
+    background: "#ff6b08",
+  },
+  warning: {
+    background: "#fc036b",
+  },
+  success: {
+    background: "#34ebb1",
+  },
+});
+
 window.onscroll = function () {
   scrollFunction();
 };
@@ -24,3 +38,5 @@ PAGINATION_CONTAINER.addEventListener("click", pagination);
 import { toggleModal } from "./JS/team-modal";
 
 import "./JS/firebase";
+import "./JS/modals";
+import Notiflix from "notiflix";

@@ -1,12 +1,18 @@
 
-const OPEN_MODAL = document.querySelector("[team-modal-open]");
-const CLOSE_MODAL= document.querySelector("[team-modal-close]");
-const MODAL = document.querySelector("[team-modal]");
+const OPEN_MODAL_TEAM = document.querySelector("[team-modal-open]");
+const CLOSE_MODAL_TEAM= document.querySelector("[team-modal-close]");
+const MODAL_TEAM = document.querySelector("[team-modal]");
 
   
-OPEN_MODAL.addEventListener("click", toggleModal);
-CLOSE_MODAL.addEventListener("click", toggleModal);
+OPEN_MODAL_TEAM.addEventListener("click", toggleModal);
+CLOSE_MODAL_TEAM.addEventListener("click", toggleModal);
   
 export function toggleModal() {
-    MODAL.classList.toggle("is-hidden");
-};
+    MODAL_TEAM.classList.toggle("is-hidden");
+}
+
+window.onclick = function(event) {
+    if (event.target == MODAL_TEAM) {
+        MODAL_TEAM.classList.toggle("is-hidden");
+    }
+  }
