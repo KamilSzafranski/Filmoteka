@@ -2,6 +2,7 @@
 const OPEN_MODAL_TEAM = document.querySelector("[team-modal-open]");
 const CLOSE_MODAL_TEAM= document.querySelector("[team-modal-close]");
 const MODAL_TEAM = document.querySelector("[team-modal]");
+const BODY = document.querySelector("[body]")
 
   
 OPEN_MODAL_TEAM.addEventListener("click", toggleModal);
