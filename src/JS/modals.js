@@ -92,7 +92,7 @@ const openmodal = async event => {
     });
 
     if (!response.ok) {
-      modalContainer.insertAdjacentHTML("afterbegin", errorImg);
+      modalContainer.insertAdjacentHTML("beforeend", errorImg);
       modalPosterWrapper.classList.add("hide");
       modalInfoWrapper.classList.add("hide");
       throw new Error(response.status);
