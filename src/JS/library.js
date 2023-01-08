@@ -1,4 +1,4 @@
-import { getLibraryMovie, libraryMode } from "./main";
+import { getLibraryMovie } from "./main";
 import { checkUserData } from "./firebase";
 const headerSearch = document.querySelector(".js-box");
 const library = document.querySelector("#library");
@@ -31,7 +31,7 @@ const pozniejNazwaNieTeraz = event => {
   const {
     dataset: { library },
   } = event.target;
-  libraryMode = library;
+  const libraryMode = library;
 
   if (library === "watch") {
     getLibraryMovie(library);

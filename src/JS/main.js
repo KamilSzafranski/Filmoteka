@@ -487,7 +487,6 @@ export {
   API_KEY,
   galleryGrid,
   getLibraryMovie,
-  libraryMode,
 };
 
 const move = value => {
