@@ -28,7 +28,6 @@ const modalListner = event => {
   const {
     dataset: { type },
   } = event.target;
-
   if (type === "watch") {
     addMovie("all", movie[0]);
     return addMovie(type, movie[0]);
@@ -46,6 +45,7 @@ const modalListner = event => {
   if (event.target === modal) {
     modal.classList.add("is-hidden");
     modal.removeEventListener("click", modalListner);
+    window.removeEventListener("keydown", closeModal);
     galleryGrid.addEventListener("click", openmodal);
   }
 };
