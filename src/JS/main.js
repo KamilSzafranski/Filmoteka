@@ -270,8 +270,9 @@ const getLibraryMovie = async (type, count = "first") => {
 https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`
     );
 
-    if (!getSearchMovieCategory.ok)
+    if (!getSearchMovieCategory.ok) {
       throw new Error(getSearchMovieCategory.status);
+    }
     const responseSearchCategory = await getSearchMovieCategory.json();
     const dataSearchCategory = responseSearchCategory.genres;
 
@@ -486,6 +487,7 @@ export {
   API_KEY,
   galleryGrid,
   getLibraryMovie,
+  libraryMode,
 };
 
 const move = value => {
