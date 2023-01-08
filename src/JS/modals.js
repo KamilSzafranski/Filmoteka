@@ -1,7 +1,9 @@
 import { galleryGrid, API_KEY } from "./main";
 import { addMovie } from "./storage";
 import Notiflix from "notiflix";
+import { renderLoader } from "./loader";
 const modal = document.querySelector(".modal-backdrop");
+import { renderLoader } from "./loader";
 
 const modalImage = document.querySelector(".film-modal-poster-img");
 const modalTitle = document.querySelector(".film-modal-title");
@@ -13,6 +15,7 @@ const modalOriginalTitle = document.querySelector(
 );
 const modalGenre = document.querySelector(".film-modal-item-genre");
 const modalAbout = document.querySelector(".film-modal-description");
+const loaderContainer = document.querySelector(".loader-container");
 
 let movie = [];
 
@@ -66,15 +69,18 @@ const openmodal = async event => {
     if (nodeName !== "IMG") return;
 
     modal.classList.remove("is-hidden");
+
     galleryGrid.removeEventListener("click", openmodal);
 
     modal.addEventListener("click", modalListner);
     window.addEventListener("keydown", closeModal);
-
     const response = await fetch(
       `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`
     );
 
+    if (!response.ok) {
+      throw new Error(response.status);
+    }
     const data = await response.json();
 
     modalTitle.textContent = data.title;

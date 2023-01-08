@@ -269,6 +269,9 @@ const getLibraryMovie = async (type, count = "first") => {
       `
 https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`
     );
+
+    if (!getSearchMovieCategory.ok)
+      throw new Error(getSearchMovieCategory.status);
     const responseSearchCategory = await getSearchMovieCategory.json();
     const dataSearchCategory = responseSearchCategory.genres;
 
@@ -289,12 +292,16 @@ const getPopularMovie = async () => {
     const getPopularMovie = await fetch(
       `https://api.themoviedb.org/3/trending/all/week?api_key=${API_KEY}`
     );
+    if (!getPopularMovie.ok) throw new Error(getPopularMovie.status);
     const responsePopularMovie = await getPopularMovie.json();
     const dataPopularMovie = responsePopularMovie.results;
 
     const getPopularMovieCategory = await fetch(
       `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`
     );
+    if (!getPopularMovieCategory.ok) {
+      throw new Error(getPopularMovieCategory.status);
+    }
     const responsePopularCategory = await getPopularMovieCategory.json();
     const dataPopularCategory = responsePopularCategory.genres;
 
@@ -309,6 +316,11 @@ const getSearchMovie = async (event, count = "first") => {
   try {
     if (count === "first") {
       currentPage = 1;
+      if (totalResults >= 1) {
+        Notiflix.Notify.success(
+          `We found ${totalResults} movies matching your search!`
+        );
+      }
     }
     mode = "search";
     event.preventDefault();
@@ -319,13 +331,7 @@ const getSearchMovie = async (event, count = "first") => {
     const params = new URLSearchParams(searchMovieOption);
     if (searchMovieOption.query === "") {
       galleryGrid.innerHTML = `<img class="empty" alt="empty "  src="${nothing2}"> `;
-      Notiflix.Notify.init({
-        clickToClose: true,
-        warning: {
-          background: "#fc036b",
-          position: "center-top",
-        },
-      });
+
       return Notiflix.Notify.warning(
         "Search result not successful. Enter the correct movie name and "
       );
@@ -336,6 +342,7 @@ const getSearchMovie = async (event, count = "first") => {
     const getSearchMovie = await fetch(
       `https://api.themoviedb.org/3/search/movie?${params}`
     );
+    if (!getSearchMovie.ok) throw new Error(getSearchMovie.status);
     const responseSearchMovie = await getSearchMovie.json();
 
     totalPages = responseSearchMovie.total_pages;
@@ -346,36 +353,12 @@ const getSearchMovie = async (event, count = "first") => {
       galleryGrid.innerHTML = `<img class="empty" alt="empty "  src="${nothing}"> `;
       PAGINATION_CONTAINER.style.display = "none";
       galleryGrid.removeEventListener("click", openmodal);
-      Notiflix.Notify.init({
-        clickToClose: true,
-        warning: {
-          background: "#fc036b",
-          position: "center-top",
-        },
-      });
       Notiflix.Notify.warning(
         "Search result not successful. Enter the correct movie name and "
       );
       return;
     } else {
       PAGINATION_CONTAINER.style.display = "flex";
-    }
-    Notiflix.Notify.init({
-      position: "center-top",
-      clickToClose: true,
-      info: {
-        background: "#ff6b08",
-        position: "center-center",
-      },
-    });
-    if (results > 1) {
-      Notiflix.Notify.info(
-        "We found " + results + " movies matching your criteria!"
-      );
-    } else {
-      Notiflix.Notify.info(
-        "We found " + results + " movie matching your criteria!"
-      );
     }
 
     if (results < 20) {
@@ -391,6 +374,9 @@ const getSearchMovie = async (event, count = "first") => {
       `
 https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`
     );
+    if (!getSearchMovieCategory.ok) {
+      throw new Error(getSearchMovieCategory.status);
+    }
     const responseSearchCategory = await getSearchMovieCategory.json();
     const dataSearchCategory = responseSearchCategory.genres;
 
