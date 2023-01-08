@@ -4,6 +4,7 @@ import Notiflix from "notiflix";
 import { renderLoader } from "./loader";
 const modal = document.querySelector(".modal-backdrop");
 import { renderLoader } from "./loader";
+import error404 from "../images/404.png";
 
 const modalImage = document.querySelector(".film-modal-poster-img");
 const modalTitle = document.querySelector(".film-modal-title");
@@ -15,7 +16,10 @@ const modalOriginalTitle = document.querySelector(
 );
 const modalGenre = document.querySelector(".film-modal-item-genre");
 const modalAbout = document.querySelector(".film-modal-description");
-const loaderContainer = document.querySelector(".loader-container");
+const modalContainer = document.querySelector(".film-modal");
+
+const modalPosterWrapper = document.querySelector(".film-modal-poster-wrap");
+const modalInfoWrapper = document.querySelector(".film-modal-info-wrap");
 
 let movie = [];
 
@@ -67,6 +71,7 @@ const openmodal = async event => {
     } = event.target;
     const modal = document.querySelector(".modal-backdrop");
     if (nodeName !== "IMG") return;
+    const errorImg = `<img alt="error 404" class="empty" src="${error404}"/>`;
 
     modal.classList.remove("is-hidden");
 
@@ -78,7 +83,18 @@ const openmodal = async event => {
       `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`
     );
 
+    modalPosterWrapper.classList.remove("hide");
+    modalInfoWrapper.classList.remove("hide");
+    [...modalContainer.children].forEach(e => {
+      if (e.classList.contains("empty")) {
+        e.remove();
+      }
+    });
+
     if (!response.ok) {
+      modalContainer.insertAdjacentHTML("afterbegin", errorImg);
+      modalPosterWrapper.classList.add("hide");
+      modalInfoWrapper.classList.add("hide");
       throw new Error(response.status);
     }
     const data = await response.json();
