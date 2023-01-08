@@ -57,6 +57,8 @@ body.dark {
   &.dark {
     background-color: $secondary-background-color;
     color: white;
+    border:1px solid $footer-text-color;
+    border-radius: 5px;
   }
 
   &.dark button {
