@@ -96,7 +96,7 @@ const openmodal = async event => {
     modal.addEventListener("click", modalListner);
     window.addEventListener("keydown", closeModal);
   } catch (error) {
-    Notiflix.Notify.warning("Sorry, Something get wrong. Plese try again");
+    Notiflix.Notify.warning("Sorry, Something get wrong. Please try again");
     console.error(error);
   }
 };

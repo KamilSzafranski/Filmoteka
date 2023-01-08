@@ -20,7 +20,7 @@ const addMovie = (movieKey, movie) => {
     const movies = getMovie(movieKey);
     if (movie.success === false) {
       return Notiflix.Notify.error(
-        "Sorry, Something get wrong. Plese try again"
+        "Sorry, Something get wrong. Please try again"
       );
     }
     if (movies.some(element => element.id === movie.id)) {
@@ -38,6 +38,9 @@ const addMovie = (movieKey, movie) => {
     localStorage.setItem(movieKey, JSON.stringify(movies));
   } catch (error) {
     console.error(error);
+    if (movieKey !== "all") {
+      Notiflix.Notify.warning("Sorry, Somthing get wrong. Plese try again");
+    }
   }
 };
 const removeMovie = (movieKey, movie) => {
