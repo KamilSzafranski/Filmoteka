@@ -44,6 +44,10 @@ const createTemplateGallery = number => {
 };
 
 const createPaginationList = numberOfPage => {
+  const media = window.matchMedia("(max-width: 600px)");
+  const additionalItems = [
+    ...document.querySelectorAll(".Pagination__additionalItem"),
+  ];
   PAGINATION_GRID.innerHTML = "";
   PAGINATION_CONTAINER.style.display = "flex";
   const paginationGridFragment = document.createDocumentFragment();
@@ -109,6 +113,12 @@ const createPaginationList = numberOfPage => {
   } else {
     PAGINATION_CONTAINER.lastElementChild.style.visibility = "visible";
     PAGINATION_CONTAINER.lastElementChild.style.opacity = "1";
+  }
+
+  if (media.matches) {
+    PAGINATION_CONTAINER.firstElementChild.style.transform = `translateX(0px)`;
+    PAGINATION_CONTAINER.lastElementChild.style.transform = `translateX(0px)`;
+    additionalItems.forEach(element => (element.style.display = "none"));
   }
 };
 const displayMovie = (Movie, Category, type = "normal") => {
@@ -317,12 +327,8 @@ const getSearchMovie = async (event, count = "first") => {
   try {
     if (count === "first") {
       currentPage = 1;
-      if (totalResults >= 1) {
-        Notiflix.Notify.success(
-          `We found ${totalResults} movies matching your search!`
-        );
-      }
     }
+
     mode = "search";
     event.preventDefault();
     GALLERY.innerHTML = "";
@@ -349,6 +355,12 @@ const getSearchMovie = async (event, count = "first") => {
     totalPages = responseSearchMovie.total_pages;
     totalResults = responseSearchMovie.total_results;
     results = responseSearchMovie.results.length;
+
+    if (count === "first" && totalResults >= 1) {
+      Notiflix.Notify.success(
+        `We found ${totalResults} movies matching your search!`
+      );
+    }
 
     if (totalResults === 0) {
       galleryGrid.innerHTML = `<img class="empty" alt="empty "  src="${nothing}"> `;
