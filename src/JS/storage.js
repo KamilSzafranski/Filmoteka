@@ -43,10 +43,11 @@ const addMovie = (movieKey, movie) => {
     }
   }
 };
-const removeMovie = (movieKey, movie) => {
+const removeMovie = (movieKey, movieID) => {
   try {
     const movies = getMovie(movieKey);
-    const updatedMovie = movies.filter(n => n !== note);
+
+    const updatedMovie = movies.filter(n => n.id !== parseInt(movieID));
 
     localStorage.setItem(movieKey, JSON.stringify(updatedMovie));
   } catch (error) {

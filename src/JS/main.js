@@ -220,6 +220,7 @@ const getLibraryMovie = async (type, count = "first") => {
       currentPage = 1;
     }
     mode = "library";
+    galleryGrid.removeEventListener("click", openmodal);
 
     GALLERY.innerHTML = "";
 
@@ -262,7 +263,7 @@ const getLibraryMovie = async (type, count = "first") => {
       if (type === "queue") {
         galleryGrid.innerHTML = `<img class="empty" alt="empty "  src="${emptyQueue}"> `;
       }
-      return;
+      return totalResults;
     } else {
       PAGINATION_CONTAINER.style.display = "flex";
     }
@@ -291,6 +292,7 @@ https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`
     if (count === "first") {
       PAGINATION_GRID.style.transform = `translateX(0px)`;
     }
+    return totalResults;
   } catch (error) {
     console.error(error.message, error.code);
   }

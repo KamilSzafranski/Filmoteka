@@ -226,3 +226,11 @@
   justify-content: center;
   align-items: center;
 }
+
+.testRemove {
+  position: fixed;
+  bottom: 100px;
+  left: 10px;
+  cursor: pointer;
+  display: none;
+}
