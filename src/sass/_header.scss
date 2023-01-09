@@ -449,6 +449,7 @@ input:-webkit-autofill {
 }
 
 .header__submit {
+  position: relative;
   position: absolute;
   background-color: inherit;
   border: none;
@@ -460,32 +461,22 @@ input:-webkit-autofill {
   transition: all 250ms $animation-function,
     -webkit-transform 250ms $animation-function;
 
-  margin-left: 380px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-
   @media screen and (max-width: 767px) {
-    right: 20px;
+    position: relative;
+    left: 290px;
+    top: -115;
   }
 
   @media screen and (min-width: 768px) and (max-width: 1023px) {
-    right: 182px;
+    position: relative;
+    top: -105;
+    left: 510;
   }
 
   @media screen and (min-width: 1024px) {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: end;
-    -ms-flex-pack: end;
-    justify-content: flex-end;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
+    position: relative;
+    top: -105;
+    left: 665;
   }
   &:focus,
   &:hover {

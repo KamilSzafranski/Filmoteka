@@ -5,6 +5,7 @@ const library = document.querySelector("#library");
 const home = document.querySelector("#home");
 const header = document.querySelector(".header");
 const searchLabel = document.querySelector(".header__label");
+const buttonSearch = document.querySelector(".header__submit");
 import Notiflix from "notiflix";
 const KEY = "UserData";
 function getUser(KEY) {
@@ -20,6 +21,7 @@ const libraryCreation = e => {
   home.classList.remove("nav-list__link--active");
   header.classList.add("header--bgc");
   searchLabel.classList.add("button-hidden");
+  buttonSearch.classList.add("button-hidden");
   const dataUser = getUser(KEY);
   if (!dataUser) Notiflix.Notify.info("Log in for more features!");
   getLibraryMovie("all");
