@@ -21,6 +21,9 @@ const PAGINATION_CONTAINER_GRID = document.querySelector(
   "div.Pagination__containerGrid"
 );
 const PAGINATION_GRID = document.querySelector("ul.Pagination__grid");
+const additionalItems = [
+  ...document.querySelectorAll(".Pagination__additionalItem"),
+];
 
 let searchMovieOption = {
   api_key: API_KEY,
@@ -43,11 +46,18 @@ const createTemplateGallery = number => {
   }
 };
 
+const additionalItemsVisibility = (type, visible, opacity) => {
+  return additionalItems.forEach(element => {
+    if (element.dataset.item === type) {
+      element.style.visibility = visible;
+      element.style.opacity = opacity;
+    }
+  });
+};
+
 const createPaginationList = numberOfPage => {
   const media = window.matchMedia("(max-width: 600px)");
-  const additionalItems = [
-    ...document.querySelectorAll(".Pagination__additionalItem"),
-  ];
+
   PAGINATION_GRID.innerHTML = "";
   PAGINATION_CONTAINER.style.display = "flex";
   const paginationGridFragment = document.createDocumentFragment();
@@ -63,42 +73,31 @@ const createPaginationList = numberOfPage => {
   let pagiantionItemActived = document.querySelector(
     `.Pagination__item:nth-child(${currentPage})`
   );
+
   pagiantionItemActived.classList.add("Pagination__item--active");
 
   if (totalPages < 5) {
     PAGINATION_CONTAINER_GRID.style.width = `${
-      totalPages * 14 + (totalPages - 1) * 16 + 26
+      totalPages * 22 + (totalPages - 1) * 18 + 18
     }px`;
     move(0);
   } else {
-    PAGINATION_CONTAINER_GRID.style.width = "160px";
+    PAGINATION_CONTAINER_GRID.style.width = "200px";
     lastItem.textContent = totalPages;
-    lastItem.style.visibility = "visible";
-    lastItem.previousElementSibling.style.visibility = "visible";
-    lastItem.style.opacity = "1";
-    lastItem.previousElementSibling.style.opacity = "1";
+    additionalItemsVisibility("right", "visible", "1");
     PAGINATION_CONTAINER.lastElementChild.style.transform = `translateX(0px)`;
   }
 
   if (totalPages - currentPage <= 3) {
-    lastItem.style.visibility = "hidden";
-    lastItem.previousElementSibling.style.visibility = "hidden";
-    lastItem.style.opacity = "0";
-    lastItem.previousElementSibling.style.opacity = "0";
-    PAGINATION_CONTAINER.lastElementChild.style.transform = `translateX(-60px)`;
+    additionalItemsVisibility("right", "hidden", "0");
+    PAGINATION_CONTAINER.lastElementChild.style.transform = `translateX(-80px)`;
   }
   if (currentPage > 3) {
     PAGINATION_CONTAINER.firstElementChild.style.transform = `translateX(0px)`;
-    firstItem.style.visibility = "visible";
-    firstItem.nextElementSibling.style.visibility = "visible";
-    firstItem.style.opacity = "1";
-    firstItem.nextElementSibling.style.opacity = "1";
+    additionalItemsVisibility("left", "visible", "1");
   } else {
-    firstItem.style.visibility = "hidden";
-    firstItem.nextElementSibling.style.visibility = "hidden";
-    firstItem.style.opacity = "0";
-    firstItem.nextElementSibling.style.opacity = "0";
-    PAGINATION_CONTAINER.firstElementChild.style.transform = `translateX(60px)`;
+    additionalItemsVisibility("left", "hidden", "0");
+    PAGINATION_CONTAINER.firstElementChild.style.transform = `translateX(80px)`;
   }
   if (currentPage === 1) {
     PAGINATION_CONTAINER.firstElementChild.style.visibility = "hidden";
@@ -427,21 +426,21 @@ const pagination = event => {
   }
 
   if (page === "next" && currentPage > 3) {
-    gridTranslateX -= 30;
+    gridTranslateX -= 40;
     move(gridTranslateX);
   }
   if (page === "previous" && currentPage >= 3) {
-    gridTranslateX += 30;
+    gridTranslateX += 40;
     move(gridTranslateX);
   }
 
   if (totalPages - currentPage <= 2 && page === "next") {
-    gridTranslateX = -(totalPages - 5) * 30;
+    gridTranslateX = -(totalPages - 5) * 40;
     move(gridTranslateX);
   }
   if (totalPages - currentPage < 2 && page == "previous") {
     {
-      gridTranslateX = -(totalPages - 5) * 30;
+      gridTranslateX = -(totalPages - 5) * 40;
       move(gridTranslateX);
     }
   }
@@ -450,13 +449,13 @@ const pagination = event => {
 
     if (Number(textContent) > 3 && currentPage >= 3) {
       if (!(totalPages - Number(textContent)) < 3) {
-        gridTranslateX = -(Number(textContent) - 3) * 30;
+        gridTranslateX = -(Number(textContent) - 3) * 40;
         move(gridTranslateX);
       }
     }
 
     if (Number(textContent) <= 3 && currentPage >= 3) {
-      gridTranslateX += (3 - Number(textContent)) * 30;
+      gridTranslateX += (3 - Number(textContent)) * 40;
       move(gridTranslateX);
     }
 
@@ -465,7 +464,7 @@ const pagination = event => {
       move(gridTranslateX);
     }
     if (totalPages - Number(textContent) < 3) {
-      gridTranslateX = -(totalPages - 5) * 30;
+      gridTranslateX = -(totalPages - 5) * 40;
       move(gridTranslateX);
     }
 
@@ -482,7 +481,7 @@ const pagination = event => {
   }
 
   if (event.target === lastItem) {
-    gridTranslateX = -(totalPages - 5) * 30;
+    gridTranslateX = -(totalPages - 5) * 40;
     move(gridTranslateX);
     currentPage = totalPages;
     if (mode === "search") getSearchMovie(event, "second");

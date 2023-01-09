@@ -83,7 +83,7 @@
   display: none;
   justify-content: center;
   align-items: center;
-  gap: 16px;
+  gap: 18px;
   font-weight: 500;
   font-size: 12px;
   line-height: 16px;
@@ -92,7 +92,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-basis: 14px;
+    flex-basis: 22px;
     flex-shrink: 0;
     transition: transform 1000ms linear, background-color 300ms ease-in,
       visibility 300ms ease-in, opacity 300ms ease-in;
@@ -110,7 +110,7 @@
   &__grid {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 18px;
     transition: transform 300ms ease-in;
     transform: translateX(0);
   }
@@ -118,7 +118,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-basis: 14px;
+    flex-basis: 22px;
     flex-shrink: 0;
     transition: transform 300ms ease-in, color 300ms ease-in;
     cursor: pointer;
