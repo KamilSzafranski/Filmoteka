@@ -29,7 +29,7 @@ const libraryCreation = e => {
 
 library.addEventListener("click", libraryCreation);
 
-const pozniejNazwaNieTeraz = event => {
+const displayLibraryType = event => {
   const {
     dataset: { library },
   } = event.target;
@@ -42,4 +42,4 @@ const pozniejNazwaNieTeraz = event => {
     getLibraryMovie(library);
   }
 };
-header.addEventListener("click", pozniejNazwaNieTeraz);
+header.addEventListener("click", displayLibraryType);
