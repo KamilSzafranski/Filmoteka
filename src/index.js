@@ -15,6 +15,7 @@ import { renderLoader } from "./JS/loader";
 import { MOVIE_KEY, getMovie, addMovie, removeMovie } from "./JS/storage";
 Notiflix.Notify.init({
   clickToClose: true,
+  timeout: 1000,
   position: "center-top",
   info: {
     background: "#ff6b08",

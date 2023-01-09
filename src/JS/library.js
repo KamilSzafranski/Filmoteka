@@ -72,11 +72,13 @@ const removeItem = e => {
   removeMovie(removeMode, id);
   removeMovie("all", id);
   getLibraryMovie(removeMode);
+  Notiflix.Notify.warning("Remove mode is now deactivate");
   galleryGrid.removeEventListener("click", removeItem);
 };
 
 const removeActivation = event => {
   event.preventDefault();
+  Notiflix.Notify.warning("Remove mode activated");
   galleryGrid.addEventListener("click", removeItem);
 };
 
