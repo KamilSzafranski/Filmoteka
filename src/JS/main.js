@@ -340,7 +340,7 @@ const getSearchMovie = async (event, count = "first") => {
       galleryGrid.innerHTML = `<img class="empty" alt="empty "  src="${nothing2}"> `;
 
       return Notiflix.Notify.warning(
-        "Search result not successful. Enter the correct movie name and "
+        "Search result not successful. Enter the correct movie name and try again."
       );
     }
 
@@ -367,7 +367,7 @@ const getSearchMovie = async (event, count = "first") => {
       PAGINATION_CONTAINER.style.display = "none";
       galleryGrid.removeEventListener("click", openmodal);
       Notiflix.Notify.warning(
-        "Search result not successful. Enter the correct movie name and "
+        "Search result not successful. Enter the correct movie name and try again."
       );
       return;
     } else {
