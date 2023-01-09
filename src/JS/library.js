@@ -1,16 +1,21 @@
-import { getLibraryMovie } from "./main";
+import { getLibraryMovie, galleryGrid } from "./main";
 import { checkUserData } from "./firebase";
+import { removeMovie } from "./storage";
+import Notiflix from "notiflix";
 const headerSearch = document.querySelector(".js-box");
 const library = document.querySelector("#library");
 const home = document.querySelector("#home");
 const header = document.querySelector(".header");
 const searchLabel = document.querySelector(".header__label");
 const buttonSearch = document.querySelector(".header__submit");
-import Notiflix from "notiflix";
+
 const KEY = "UserData";
 function getUser(KEY) {
   return JSON.parse(localStorage.getItem(KEY));
 }
+let removeMode;
+let libraryType;
+const removeButton = document.querySelector(".testRemove");
 
 const libraryCreation = e => {
   e.preventDefault();
@@ -24,7 +29,15 @@ const libraryCreation = e => {
   buttonSearch.classList.add("button-hidden");
   const dataUser = getUser(KEY);
   if (!dataUser) Notiflix.Notify.info("Log in for more features!");
-  getLibraryMovie("all");
+  removeButton.style.display = "block";
+  removeButton.disabled = true;
+
+  getLibraryMovie("all").then(totalResults => {
+    totalResults >= 1
+      ? Notiflix.Notify.success(`We fount ${totalResults} movie in your library
+    To remove movie from you library first select type of library :)`)
+      : Notiflix.Notify.warning("Sorry, we found 0 movie");
+  });
 };
 
 library.addEventListener("click", libraryCreation);
@@ -33,13 +46,39 @@ const displayLibraryType = event => {
   const {
     dataset: { library },
   } = event.target;
-  const libraryMode = library;
+  libraryType = library;
 
   if (library === "watch") {
+    removeMode = "watch";
+    removeButton.style.display = "block";
+    removeButton.disabled = false;
     getLibraryMovie(library);
   }
   if (library === "queue") {
+    removeMode = "queue";
+    removeButton.style.display = "block";
+    removeButton.disabled = false;
     getLibraryMovie(library);
   }
 };
+
+const removeItem = e => {
+  e.preventDefault();
+  const {
+    dataset: { id },
+  } = e.target;
+  console.log(libraryType);
+
+  removeMovie(removeMode, id);
+  removeMovie("all", id);
+  getLibraryMovie(removeMode);
+  galleryGrid.removeEventListener("click", removeItem);
+};
+
+const removeActivation = event => {
+  event.preventDefault();
+  galleryGrid.addEventListener("click", removeItem);
+};
+
 header.addEventListener("click", displayLibraryType);
+removeButton.addEventListener("click", removeActivation);
