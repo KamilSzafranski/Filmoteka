@@ -67,6 +67,9 @@ const displayLibraryType = event => {
 
 const removeItem = async e => {
   e.preventDefault();
+  [...galleryGrid.children].forEach(element =>
+    element.classList.remove("shake")
+  );
   const {
     dataset: { id },
   } = e.target;
@@ -96,6 +99,7 @@ const removeItem = async e => {
 const removeActivation = event => {
   event.preventDefault();
   Notiflix.Notify.warning("Remove mode activated");
+  [...galleryGrid.children].forEach(element => element.classList.add("shake"));
   galleryGrid.addEventListener("click", removeItem);
 };
 
