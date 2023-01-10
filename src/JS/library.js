@@ -85,9 +85,8 @@ const removeItem = async e => {
   const isAnyMovieInInversMode = getMovie(inverseRemoveMode).filter(
     element => element.id === Number(id)
   );
-
   removeMovie(removeMode, id);
-  if (!isAnyMovieInInversMode) {
+  if (!isAnyMovieInInversMode[0]) {
     removeMovie("all", id);
   }
   getLibraryMovie(removeMode, "second", pageToRender);
