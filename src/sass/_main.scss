@@ -227,10 +227,59 @@
   align-items: center;
 }
 
-.testRemove {
-  position: fixed;
-  bottom: 100px;
-  left: 10px;
-  cursor: pointer;
+.btnRemove {
   display: none;
+  position: absolute;
+  bottom: 10px;
+  left: calc(50% - 32.75px);
+  padding: 6px 8px;
+  color: #fff;
+  background-color: #ff6b08;
+  font-size: 14px;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  border: 1px solid #999999;
+  transition: all 0.3s linear;
+  cursor: pointer;
+  &:hover,
+  &:focus {
+    background-color: #f7f7f7;
+    color: $accent-color;
+    transform: scale(1.1);
+  }
+  &--disabled {
+    border: 1px solid #999999;
+    background-color: #cccccc;
+    color: #666666;
+    &:hover,
+    &:focus {
+      border: 1px solid #999999;
+      background-color: #cccccc;
+      color: #666666;
+      transform: scale(1);
+      cursor: not-allowed;
+    }
+  }
+}
+
+@keyframes removeAnimation {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(2deg);
+  }
+  50% {
+    transform: rotate(0eg);
+  }
+  75% {
+    transform: rotate(-2deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+.shake {
+  animation: removeAnimation 0.3s infinite;
 }

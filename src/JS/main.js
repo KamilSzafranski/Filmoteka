@@ -214,7 +214,7 @@ const displayMovie = (Movie, Category, type = "normal") => {
   });
 };
 
-const getLibraryMovie = async (type, count = "first") => {
+const getLibraryMovie = async (type, count = "first", test2) => {
   try {
     if (count === "first") {
       currentPage = 1;
@@ -223,6 +223,8 @@ const getLibraryMovie = async (type, count = "first") => {
     galleryGrid.removeEventListener("click", openmodal);
 
     GALLERY.innerHTML = "";
+    currentPage = test2 ?? currentPage;
+    console.currentPage;
 
     createTemplateGallery(NUMBEF_OF_PHOTO);
     let libraryMovie;

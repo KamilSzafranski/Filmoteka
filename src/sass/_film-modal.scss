@@ -137,7 +137,6 @@
     font-size: 30px;
     line-height: 35px;
   }
-
 }
 
 .film-modal-item-description {
@@ -165,18 +164,18 @@
 }
 
 .film-modal-about {
-
   font-weight: 500;
   font-size: 12px;
   line-height: 16px;
   margin-top: 20px;
   margin-bottom: 8px;
-
 }
 
 .film-modal-description {
   font-weight: 500;
   font-size: 12px;
+  max-height: 150px;
+  overflow-y: auto;
   line-height: 1.67;
 
   @media screen and (max-width: 2560px) {
@@ -191,7 +190,6 @@
 
   @media screen and (min-width: 1024px) {
     margin-left: auto;
-
   }
 }
 
