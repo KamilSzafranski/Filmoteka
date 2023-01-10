@@ -1,6 +1,6 @@
 import { getLibraryMovie, galleryGrid } from "./main";
 import { checkUserData } from "./firebase";
-import { removeMovie } from "./storage";
+import { getMovie, removeMovie } from "./storage";
 import Notiflix from "notiflix";
 const headerSearch = document.querySelector(".js-box");
 const library = document.querySelector("#library");
@@ -15,7 +15,8 @@ function getUser(KEY) {
 }
 let removeMode;
 let libraryType;
-const removeButton = document.querySelector(".testRemove");
+let inverseRemoveMode;
+const removeButton = document.querySelector(".btnRemove");
 
 const libraryCreation = e => {
   e.preventDefault();
@@ -31,6 +32,7 @@ const libraryCreation = e => {
   if (!dataUser) Notiflix.Notify.info("Log in for more features!");
   removeButton.style.display = "block";
   removeButton.disabled = true;
+  removeButton.classList.add("btnRemove--disabled");
 
   getLibraryMovie("all").then(totalResults => {
     totalResults >= 1
@@ -47,31 +49,46 @@ const displayLibraryType = event => {
     dataset: { library },
   } = event.target;
   libraryType = library;
+  if (library !== "queue" && library !== "watch") return;
 
   if (library === "watch") {
     removeMode = "watch";
-    removeButton.style.display = "block";
-    removeButton.disabled = false;
-    getLibraryMovie(library);
+    inverseRemoveMode = "queue";
   }
   if (library === "queue") {
     removeMode = "queue";
-    removeButton.style.display = "block";
-    removeButton.disabled = false;
-    getLibraryMovie(library);
+    inverseRemoveMode = "watch";
   }
+  removeButton.style.display = "block";
+  removeButton.disabled = false;
+  removeButton.classList.remove("btnRemove--disabled");
+  getLibraryMovie(library);
 };
 
-const removeItem = e => {
+const removeItem = async e => {
   e.preventDefault();
   const {
     dataset: { id },
   } = e.target;
-  console.log(libraryType);
+  let pageToRender = Number(
+    document.querySelector(".Pagination__item--active").textContent
+  );
+
+  const movieLeft = [...document.querySelectorAll(".MainPage__Item")];
+  if (movieLeft.length === 1 && pageToRender !== 1) {
+    pageToRender -= 1;
+  }
+
+  const isAnyMovieInInversMode = getMovie(inverseRemoveMode).filter(
+    element => element.id === Number(id)
+  );
 
   removeMovie(removeMode, id);
-  removeMovie("all", id);
-  getLibraryMovie(removeMode);
+  if (!isAnyMovieInInversMode) {
+    removeMovie("all", id);
+  }
+  getLibraryMovie(removeMode, "second", pageToRender);
+
   Notiflix.Notify.warning("Remove mode is now deactivate");
   galleryGrid.removeEventListener("click", removeItem);
 };
