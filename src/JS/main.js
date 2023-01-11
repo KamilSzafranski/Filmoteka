@@ -8,6 +8,7 @@ import nothing from "../images/nothing3.png";
 import Notiflix from "notiflix";
 import nothing2 from "../images/nothing2.png";
 import nothing2 from "../images/nothing2.png";
+import { removeButton } from "./library";
 
 const GALLERY = document.querySelector("ul.MainPage__Grid");
 const GALLERY_TEMPLATE = document.querySelector("template.GalleryTemplate");
@@ -256,6 +257,8 @@ const getLibraryMovie = async (type, count = "first", test2) => {
     if (totalResults === 0) {
       PAGINATION_CONTAINER.style.display = "none";
       galleryGrid.removeEventListener("click", openmodal);
+      removeButton.disabled = true;
+      removeButton.classList.add("btnRemove--disabled");
       if (type === "all") {
         galleryGrid.innerHTML = `<img class="empty" alt="empty "  src="${empty}"> `;
       }
@@ -268,6 +271,8 @@ const getLibraryMovie = async (type, count = "first", test2) => {
       return totalResults;
     } else {
       PAGINATION_CONTAINER.style.display = "flex";
+      removeButton.disabled = false;
+      removeButton.classList.remove("btnRemove--disabled");
     }
     if (results < 20) {
       const removeRemainingSkeleton = [...GALLERY.children].forEach(

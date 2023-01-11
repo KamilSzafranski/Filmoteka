@@ -1,5 +1,5 @@
 import { galleryGrid, API_KEY } from "./main";
-import { addMovie } from "./storage";
+import { addMovie, getMovie } from "./storage";
 import Notiflix from "notiflix";
 import { renderLoader } from "./loader";
 const modal = document.querySelector(".modal-backdrop");
@@ -14,6 +14,8 @@ const modalPopularity = document.querySelector(".film-modal-item-popularity");
 const modalOriginalTitle = document.querySelector(
   ".film-modal-item-original-title"
 );
+const btnWatch = document.querySelector(`.film-modal-btn[data-type="watch"]`);
+const btnQueue = document.querySelector(`.film-modal-btn[data-type="queue"]`);
 const modalGenre = document.querySelector(".film-modal-item-genre");
 const modalAbout = document.querySelector(".film-modal-description");
 const modalContainer = document.querySelector(".film-modal");
@@ -28,12 +30,15 @@ const modalListner = event => {
   const {
     dataset: { type },
   } = event.target;
+
   if (type === "watch") {
     addMovie("all", movie[0]);
+    event.target.textContent = "Added to watch list";
     return addMovie(type, movie[0]);
   }
   if (type === "queue") {
     addMovie("all", movie[0]);
+    event.target.textContent = "Added to queue list";
     return addMovie(type, movie[0]);
   }
   if (type === "close") {
@@ -114,6 +119,22 @@ const openmodal = async event => {
 
     movie = [];
     movie.push(data);
+
+    const isMovieInWatchLibrary = getMovie("watch").filter(
+      m => m.id === movie[0].id
+    );
+    const isMovieInQueueLibrary = getMovie("queue").filter(
+      m => m.id === movie[0].id
+    );
+    if (isMovieInWatchLibrary[0]) {
+      btnWatch.textContent = "Added to watch list";
+    }
+    if (isMovieInQueueLibrary[0]) {
+      btnQueue.textContent = "Added to queue list";
+    } else {
+      btnWatch.textContent = "add to watch";
+      btnQueue.textContent = "add to queue";
+    }
 
     modal.addEventListener("click", modalListner);
     window.addEventListener("keydown", closeModal);

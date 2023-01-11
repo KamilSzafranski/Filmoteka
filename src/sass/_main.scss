@@ -27,8 +27,8 @@
   &__container {
     flex-grow: 2;
   }
-  &__PhotoContainer {
-    margin-bottom: 20px;
+  &__Item {
+    margin-bottom: 30px;
   }
   &__Grid {
     margin-bottom: 40px;
@@ -188,6 +188,7 @@
     }
     &__Item {
       flex-basis: calc((100% - 30px) / 2);
+      margin-bottom: 0px;
     }
   }
 }
