@@ -8,16 +8,19 @@ const setCookie = (cName, cValue, expDays) => {
   document.cookie = `${cName}=${cValue}; ${expires}; path=/ `;
 };
 
-const getCookie = cName => {
-  const name = `cName=`;
-  const cDecoded = decodeURIComponent(document.cookie);
-  const cArr = cDecoded.split(";");
-  let value;
+const getCookie = name => {
+  if (document.cookie !== "") {
+    const cookies = document.cookie.split(/; */);
 
-  cArr.forEach(val => {
-    if (val.indexOf(name) === 0) value = val.substring(name.length);
-  });
-  return value;
+    for (let cookie of cookies) {
+      const [cookieName, cookieVal] = cookie.split("=");
+      if (cookieName === decodeURIComponent(name)) {
+        return decodeURIComponent(cookieVal);
+      }
+    }
+  }
+
+  return undefined;
 };
 
 /* cookieMsg = () => {
@@ -29,3 +32,5 @@ COOKIES_BTN.addEventListener("click", () => {
   COOKIES.style.display = "none";
   setCookie("cookie", true, 30);
 });
+
+export { getCookie, COOKIES };
