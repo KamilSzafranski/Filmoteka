@@ -30,6 +30,7 @@ const libraryCreation = e => {
   buttonSearch.classList.add("button-hidden");
   const dataUser = getUser(KEY);
   if (!dataUser) Notiflix.Notify.info("Log in for more features!");
+
   removeButton.style.display = "block";
   removeButton.disabled = true;
   removeButton.classList.add("btnRemove--disabled");
