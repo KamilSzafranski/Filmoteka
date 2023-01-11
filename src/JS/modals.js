@@ -33,14 +33,12 @@ const modalListner = event => {
 
   if (type === "watch") {
     addMovie("all", movie[0]);
-    event.target.textContent = "already in your watched library";
-    event.target.disabled = true;
+    event.target.textContent = "Added to watch list";
     return addMovie(type, movie[0]);
   }
   if (type === "queue") {
     addMovie("all", movie[0]);
-    event.target.textContent = "already in your watched library";
-    event.target.disabled = true;
+    event.target.textContent = "Added to queue list";
     return addMovie(type, movie[0]);
   }
   if (type === "close") {
@@ -129,15 +127,11 @@ const openmodal = async event => {
       m => m.id === movie[0].id
     );
     if (isMovieInWatchLibrary[0]) {
-      btnWatch.disabled = true;
-      btnWatch.textContent = "already in your watched library";
+      btnWatch.textContent = "Added to watch list";
     }
     if (isMovieInQueueLibrary[0]) {
-      btnQueue.disabled = true;
-      btnQueue.textContent = "already in your queue library";
+      btnQueue.textContent = "Added to queue list";
     } else {
-      btnWatch.disabled = false;
-      btnQueue.disabled = false;
       btnWatch.textContent = "add to watch";
       btnQueue.textContent = "add to queue";
     }

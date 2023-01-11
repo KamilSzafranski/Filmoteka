@@ -59,6 +59,7 @@ const displayLibraryType = event => {
     removeMode = "queue";
     inverseRemoveMode = "watch";
   }
+
   removeButton.style.display = "block";
   removeButton.disabled = false;
   removeButton.classList.remove("btnRemove--disabled");
@@ -66,33 +67,37 @@ const displayLibraryType = event => {
 };
 
 const removeItem = async e => {
-  e.preventDefault();
-  [...galleryGrid.children].forEach(element =>
-    element.classList.remove("shake")
-  );
-  const {
-    dataset: { id },
-  } = e.target;
-  let pageToRender = Number(
-    document.querySelector(".Pagination__item--active").textContent
-  );
+  try {
+    e.preventDefault();
+    [...galleryGrid.children].forEach(element =>
+      element.classList.remove("shake")
+    );
+    const {
+      dataset: { id },
+    } = e.target;
+    let pageToRender = Number(
+      document.querySelector(".Pagination__item--active").textContent
+    );
 
-  const movieLeft = [...document.querySelectorAll(".MainPage__Item")];
-  if (movieLeft.length === 1 && pageToRender !== 1) {
-    pageToRender -= 1;
+    const movieLeft = [...document.querySelectorAll(".MainPage__Item")];
+    if (movieLeft.length === 1 && pageToRender !== 1) {
+      pageToRender -= 1;
+    }
+
+    const isAnyMovieInInversMode = getMovie(inverseRemoveMode).filter(
+      element => element.id === Number(id)
+    );
+    removeMovie(removeMode, id);
+    if (!isAnyMovieInInversMode[0]) {
+      removeMovie("all", id);
+    }
+    getLibraryMovie(removeMode, "second", pageToRender);
+
+    Notiflix.Notify.warning("Remove mode is now deactivate");
+    galleryGrid.removeEventListener("click", removeItem);
+  } catch (error) {
+    console.error(error);
   }
-
-  const isAnyMovieInInversMode = getMovie(inverseRemoveMode).filter(
-    element => element.id === Number(id)
-  );
-  removeMovie(removeMode, id);
-  if (!isAnyMovieInInversMode[0]) {
-    removeMovie("all", id);
-  }
-  getLibraryMovie(removeMode, "second", pageToRender);
-
-  Notiflix.Notify.warning("Remove mode is now deactivate");
-  galleryGrid.removeEventListener("click", removeItem);
 };
 
 const removeActivation = event => {
@@ -104,3 +109,5 @@ const removeActivation = event => {
 
 header.addEventListener("click", displayLibraryType);
 removeButton.addEventListener("click", removeActivation);
+
+export { removeButton };
