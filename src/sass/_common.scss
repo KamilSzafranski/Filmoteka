@@ -58,7 +58,7 @@ body.dark {
   &.dark {
     background-color: $secondary-background-color;
     color: white;
-    border:1px solid $footer-text-color;
+    border: 1px solid $footer-text-color;
     border-radius: 5px;
   }
 
@@ -95,6 +95,7 @@ body.dark {
   width: 70px;
   border-radius: 100px;
   background-color: transparent;
+  background-color: #545454;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   z-index: 1;

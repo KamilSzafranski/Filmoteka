@@ -1,16 +1,22 @@
-import { getLibraryMovie } from "./main";
+import { getLibraryMovie, galleryGrid } from "./main";
 import { checkUserData } from "./firebase";
+import { getMovie, removeMovie } from "./storage";
+import Notiflix from "notiflix";
 const headerSearch = document.querySelector(".js-box");
 const library = document.querySelector("#library");
 const home = document.querySelector("#home");
 const header = document.querySelector(".header");
 const searchLabel = document.querySelector(".header__label");
 const buttonSearch = document.querySelector(".header__submit");
-import Notiflix from "notiflix";
+
 const KEY = "UserData";
 function getUser(KEY) {
   return JSON.parse(localStorage.getItem(KEY));
 }
+let removeMode;
+let libraryType;
+let inverseRemoveMode;
+const removeButton = document.querySelector(".btnRemove");
 
 const libraryCreation = e => {
   e.preventDefault();
@@ -24,22 +30,85 @@ const libraryCreation = e => {
   buttonSearch.classList.add("button-hidden");
   const dataUser = getUser(KEY);
   if (!dataUser) Notiflix.Notify.info("Log in for more features!");
-  getLibraryMovie("all");
+
+  removeButton.style.display = "block";
+  removeButton.disabled = true;
+  removeButton.classList.add("btnRemove--disabled");
+
+  getLibraryMovie("all").then(totalResults => {
+    totalResults >= 1
+      ? Notiflix.Notify.success(`We fount ${totalResults} movie in your library
+    To remove movie from you library first select type of library :)`)
+      : Notiflix.Notify.warning("Sorry, we found 0 movie");
+  });
 };
 
 library.addEventListener("click", libraryCreation);
 
-const pozniejNazwaNieTeraz = event => {
+const displayLibraryType = event => {
   const {
     dataset: { library },
   } = event.target;
-  const libraryMode = library;
+  libraryType = library;
+  if (library !== "queue" && library !== "watch") return;
 
   if (library === "watch") {
-    getLibraryMovie(library);
+    removeMode = "watch";
+    inverseRemoveMode = "queue";
   }
   if (library === "queue") {
-    getLibraryMovie(library);
+    removeMode = "queue";
+    inverseRemoveMode = "watch";
+  }
+
+  removeButton.style.display = "block";
+  removeButton.disabled = false;
+  removeButton.classList.remove("btnRemove--disabled");
+  getLibraryMovie(library);
+};
+
+const removeItem = async e => {
+  try {
+    e.preventDefault();
+    [...galleryGrid.children].forEach(element =>
+      element.classList.remove("shake")
+    );
+    const {
+      dataset: { id },
+    } = e.target;
+    let pageToRender = Number(
+      document.querySelector(".Pagination__item--active").textContent
+    );
+
+    const movieLeft = [...document.querySelectorAll(".MainPage__Item")];
+    if (movieLeft.length === 1 && pageToRender !== 1) {
+      pageToRender -= 1;
+    }
+
+    const isAnyMovieInInversMode = getMovie(inverseRemoveMode).filter(
+      element => element.id === Number(id)
+    );
+    removeMovie(removeMode, id);
+    if (!isAnyMovieInInversMode[0]) {
+      removeMovie("all", id);
+    }
+    getLibraryMovie(removeMode, "second", pageToRender);
+
+    Notiflix.Notify.warning("Remove mode is now deactivate");
+    galleryGrid.removeEventListener("click", removeItem);
+  } catch (error) {
+    console.error(error);
   }
 };
-header.addEventListener("click", pozniejNazwaNieTeraz);
+
+const removeActivation = event => {
+  event.preventDefault();
+  Notiflix.Notify.warning("Remove mode activated");
+  [...galleryGrid.children].forEach(element => element.classList.add("shake"));
+  galleryGrid.addEventListener("click", removeItem);
+};
+
+header.addEventListener("click", displayLibraryType);
+removeButton.addEventListener("click", removeActivation);
+
+export { removeButton };

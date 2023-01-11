@@ -8,6 +8,7 @@ import nothing from "../images/nothing3.png";
 import Notiflix from "notiflix";
 import nothing2 from "../images/nothing2.png";
 import nothing2 from "../images/nothing2.png";
+import { removeButton } from "./library";
 
 const GALLERY = document.querySelector("ul.MainPage__Grid");
 const GALLERY_TEMPLATE = document.querySelector("template.GalleryTemplate");
@@ -214,14 +215,17 @@ const displayMovie = (Movie, Category, type = "normal") => {
   });
 };
 
-const getLibraryMovie = async (type, count = "first") => {
+const getLibraryMovie = async (type, count = "first", test2) => {
   try {
     if (count === "first") {
       currentPage = 1;
     }
     mode = "library";
+    galleryGrid.removeEventListener("click", openmodal);
 
     GALLERY.innerHTML = "";
+    currentPage = test2 ?? currentPage;
+    console.currentPage;
 
     createTemplateGallery(NUMBEF_OF_PHOTO);
     let libraryMovie;
@@ -253,6 +257,8 @@ const getLibraryMovie = async (type, count = "first") => {
     if (totalResults === 0) {
       PAGINATION_CONTAINER.style.display = "none";
       galleryGrid.removeEventListener("click", openmodal);
+      removeButton.disabled = true;
+      removeButton.classList.add("btnRemove--disabled");
       if (type === "all") {
         galleryGrid.innerHTML = `<img class="empty" alt="empty "  src="${empty}"> `;
       }
@@ -262,9 +268,11 @@ const getLibraryMovie = async (type, count = "first") => {
       if (type === "queue") {
         galleryGrid.innerHTML = `<img class="empty" alt="empty "  src="${emptyQueue}"> `;
       }
-      return;
+      return totalResults;
     } else {
       PAGINATION_CONTAINER.style.display = "flex";
+      removeButton.disabled = false;
+      removeButton.classList.remove("btnRemove--disabled");
     }
     if (results < 20) {
       const removeRemainingSkeleton = [...GALLERY.children].forEach(
@@ -291,6 +299,7 @@ https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`
     if (count === "first") {
       PAGINATION_GRID.style.transform = `translateX(0px)`;
     }
+    return totalResults;
   } catch (error) {
     console.error(error.message, error.code);
   }
