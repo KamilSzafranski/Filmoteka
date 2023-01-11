@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 // import { getPopularMovie } from "./main";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import Notiflix from "notiflix";
 
 const googleAuthBtn = document.querySelector("#google");
 const googleAuthDiv = document.querySelector("#google-box-id");
@@ -93,6 +94,7 @@ function logoutClick() {
   document.querySelector(".js-box-out").remove();
   googleAuthBtn.classList.remove("button-hidden");
   //   getPopularMovie();
+  Notiflix.Notify.info("You are now logged out.");
 }
 
 function checkUserData() {

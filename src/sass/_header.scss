@@ -262,17 +262,17 @@ header.header--bgc {
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     width: 300px;
-    margin-bottom: 50px;
+    margin-bottom: 15px;
     margin-left: 6px;
     margin-top: 20px;
   }
 
   @media screen and (min-width: 768px) and (max-width: 1023px) {
-    margin-bottom: 40px;
+    margin-bottom: 15px;
   }
 
   @media screen and (min-width: 1024px) {
-    margin-bottom: 40px;
+    margin-bottom: 15px;
   }
   &__link {
     display: -webkit-box;
@@ -704,4 +704,7 @@ input:-webkit-autofill {
 
 .button-hidden {
   display: none;
+}
+.search-form {
+  margin-top: 40px;
 }
