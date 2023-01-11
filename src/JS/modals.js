@@ -1,5 +1,5 @@
 import { galleryGrid, API_KEY } from "./main";
-import { addMovie } from "./storage";
+import { addMovie, getMovie } from "./storage";
 import Notiflix from "notiflix";
 import { renderLoader } from "./loader";
 const modal = document.querySelector(".modal-backdrop");
@@ -14,6 +14,8 @@ const modalPopularity = document.querySelector(".film-modal-item-popularity");
 const modalOriginalTitle = document.querySelector(
   ".film-modal-item-original-title"
 );
+const btnWatch = document.querySelector(`.film-modal-btn[data-type="watch"]`);
+const btnQueue = document.querySelector(`.film-modal-btn[data-type="queue"]`);
 const modalGenre = document.querySelector(".film-modal-item-genre");
 const modalAbout = document.querySelector(".film-modal-description");
 const modalContainer = document.querySelector(".film-modal");
@@ -28,12 +30,17 @@ const modalListner = event => {
   const {
     dataset: { type },
   } = event.target;
+
   if (type === "watch") {
     addMovie("all", movie[0]);
+    event.target.textContent = "already in your watched library";
+    event.target.disabled = true;
     return addMovie(type, movie[0]);
   }
   if (type === "queue") {
     addMovie("all", movie[0]);
+    event.target.textContent = "already in your watched library";
+    event.target.disabled = true;
     return addMovie(type, movie[0]);
   }
   if (type === "close") {
@@ -114,6 +121,26 @@ const openmodal = async event => {
 
     movie = [];
     movie.push(data);
+
+    const isMovieInWatchLibrary = getMovie("watch").filter(
+      m => m.id === movie[0].id
+    );
+    const isMovieInQueueLibrary = getMovie("queue").filter(
+      m => m.id === movie[0].id
+    );
+    if (isMovieInWatchLibrary[0]) {
+      btnWatch.disabled = true;
+      btnWatch.textContent = "already in your watched library";
+    }
+    if (isMovieInQueueLibrary[0]) {
+      btnQueue.disabled = true;
+      btnQueue.textContent = "already in your queue library";
+    } else {
+      btnWatch.disabled = false;
+      btnQueue.disabled = false;
+      btnWatch.textContent = "add to watch";
+      btnQueue.textContent = "add to queue";
+    }
 
     modal.addEventListener("click", modalListner);
     window.addEventListener("keydown", closeModal);
