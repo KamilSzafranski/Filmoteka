@@ -270,9 +270,11 @@ const getLibraryMovie = async (type, count = "first", test2) => {
       }
       return totalResults;
     } else {
-      PAGINATION_CONTAINER.style.display = "flex";
-      removeButton.disabled = false;
-      removeButton.classList.remove("btnRemove--disabled");
+      if (type !== "all") {
+        PAGINATION_CONTAINER.style.display = "flex";
+        removeButton.disabled = false;
+        removeButton.classList.remove("btnRemove--disabled");
+      }
     }
     if (results < 20) {
       const removeRemainingSkeleton = [...GALLERY.children].forEach(
