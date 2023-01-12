@@ -574,6 +574,7 @@ input:-webkit-autofill {
 .google-userpic {
   border-radius: 20px;
   display: flex;
+  margin-bottom: 3;
 }
 .google-username {
   font-weight: 700;
@@ -673,17 +674,17 @@ input:-webkit-autofill {
   @media screen and (max-width: 767px) {
     position: relative;
     top: 5;
-    right: 5;
+    right: 3.5;
   }
   @media (min-width: 768px) and (max-width: 1023px) {
     position: relative;
-    right: 4;
+    right: 3.5;
     top: 10;
   }
   @media screen and (min-width: 1024px) {
     position: absolute;
     top: 60;
-    right: 42%;
+    right: 45%;
   }
 
   &:hover {
